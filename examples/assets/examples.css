@@ -21,5 +21,5 @@ blockquote:before, blockquote:after,
 q:before, q:after { content: ''; content: none; }
 table { border-collapse: collapse; border-spacing: 0; }
 
-html, body { height: 100%; font-family: tahoma, arial; font-size: 12px; }
+html, body { height: 100%; font-family: tahoma, arial; font-size: 14px; }
 h1 { font-size: 26px; margin-bottom: 15px; }

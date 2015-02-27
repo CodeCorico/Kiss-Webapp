@@ -26,7 +26,7 @@ $(function() {
 
     this.init = function() {
       $('[plumes]').each(function() {
-        var app = new _this.App($(this));
+        var app = new _this.App(_this, $(this));
         if(app) {
           var appName = app.name();
 

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var App = function($app) {
+  var App = function(plumes, $app) {
 
     window.EventsManager.call(this);
 
@@ -42,7 +42,7 @@
     function _collectPages() {
       $app.find('[pl-page]').each(function() {
         var $this = $(this);
-        var page = new window.Plumes.Page($this);
+        var page = new plumes.Page(plumes, _this, $this);
         if(page) {
           var pageName = page.name();
 

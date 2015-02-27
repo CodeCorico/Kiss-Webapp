@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var Page = function($page) {
+  var Page = function(plumes, app, $page) {
 
     window.EventsManager.call(this);
 
@@ -106,7 +106,10 @@
     function _callControllers(i, callback) {
       _controllers[i].call(_this, function() {
         if(i < _controllers.length - 1) {
-          _callControllers(++i, callback);
+          return _callControllers(++i, callback);
+        }
+        if(callback) {
+          callback();
         }
       });
     }
@@ -129,6 +132,15 @@
             name = $this.attr('pl-element');
 
         _this.el[name] = $this;
+      });
+
+      _$dom.find('[pl-nav-page]').each(function() {
+        var $this = $(this),
+            name = $this.attr('pl-nav-page');
+
+        $this.click(function() {
+          app.open(name);
+        });
       });
 
       _$dom.find('[pl-bind]').each(function() {
@@ -162,7 +174,10 @@
       if(_controllers.length) {
         return _callControllers(0, callback);
       }
-      callback();
+
+      if(callback) {
+        callback();
+      }
     };
 
     this.clear = function() {
