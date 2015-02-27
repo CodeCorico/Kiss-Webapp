@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="./assets/examples.css">
   </head>
   <body plumes="ExamplePages" index="home">
+
     <script type="text/html" pl-page="home" src="./pages/page-home.html"></script>
     <script type="text/html" pl-page="user" src="./pages/page-user.html"></script>
 
@@ -24,35 +25,24 @@
           this.ExamplePages.home.controller(function(next) {
             console.log('Load Home page');
 
-            var _this = this;
-
             this
-              .bind('hello', function(value, oldValue) {
-                console.log('[hello] old:', oldValue, ', value:', value);
-              })
-              .bind('buttonTest', function(event) {
-                console.log('[buttonTest] click', event);
-              })
               .bind('user', function(value, oldValue) {
                 console.log('[user] old:', oldValue, ', value:', value);
               })
-              .bind('userSubmit', function(event) {
-                console.log('[userSubmit] submit', event);
+              .bind('buttonTest', function(value) {
+                console.log('[buttonTest] click', value);
+              })
+              .bind('userSubmit', function(value) {
+                console.log('[userSubmit] submit', value);
               });
             //   .beforeNav('user', function(collection, callback) {
 
             //     callback(collection);
             //   });
 
-            this
-              .collection('hello', 'Hello world!')
-              .collection('user', 'Xavier');
+            this.collection('user', 'Xavier');
 
-            setTimeout(function() {
-              _this.collection('hello', 'OK OK OK');
-            }, 2000);
-
-            // this.el.inputUser.css('background', 'blue');
+            this.el.inputUser.css('background', 'blue');
 
             console.log('Home page has', this.DOM().children().length, 'children');
 

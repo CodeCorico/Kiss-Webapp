@@ -14,12 +14,15 @@
         _compile = null,
         _$dom = null,
         _controllers = [],
-        _collection = null;
+        _collection = null,
+        _elements = null;
 
     if($page.get(0).tagName.toLowerCase() != 'script' || !_name || !_src) {
-      console.error('Error: Page format needs to be SCRIPT node with "page" and "src" attributes.');
+      console.error('Error: Page format needs to be SCRIPT node with "pl-page" and "src" attributes.');
       return false;
     }
+
+    this.el = {};
 
     this.name = function() {
       return _name;
@@ -39,13 +42,14 @@
       }
 
       var oldValue = _collection[name];
+      if(oldValue != value) {
+        _collection[name] = value;
 
-      _collection[name] = value;
-
-      _this.fire(name + 'Changed', {
-        value: value,
-        oldValue: oldValue
-      });
+        _this.fire(name + 'Changed', {
+          value: value,
+          oldValue: oldValue
+        });
+      }
 
       return this;
     };
@@ -116,9 +120,43 @@
             name = $this.attr('pl-binded');
 
         _this.bind(name, function(value) {
-          console.log(value);
           $this.html(value);
         });
+      });
+
+      _$dom.find('[pl-element]').each(function() {
+        var $this = $(this),
+            name = $this.attr('pl-element');
+
+        _this.el[name] = $this;
+      });
+
+      _$dom.find('[pl-bind]').each(function() {
+        var $this = $(this),
+            name = $this.attr('pl-bind'),
+            type = ($this.attr('type') || '').toLowerCase(),
+            tagName = $this.get(0).tagName.toLowerCase();
+
+        if(tagName == 'button' || (tagName == 'input' && (type == 'button' || type == 'submit'))) {
+          $this.bind('click', function() {
+            _this.collection(name, (_this.collection(name) || 0) + 1);
+          });
+        }
+        else if(tagName == 'input' || tagName == 'textarea') {
+          _this.bind(name, function(value) {
+            $this.val(value);
+          });
+
+          $this.bind('propertychange change click keyup input paste', function() {
+            _this.collection(name, $this.val());
+          });
+        }
+        else if(tagName == 'form') {
+          $this.submit(function(event) {
+            event.preventDefault();
+            _this.collection(name, (_this.collection(name) || 0) + 1);
+          });
+        }
       });
 
       if(_controllers.length) {
@@ -130,7 +168,9 @@
     this.clear = function() {
       _$dom = null;
       _collection = {};
+      _elements = {};
       _this.removeEventsNamespace('collection');
+      _this.el = {};
 
       return _this;
     };
