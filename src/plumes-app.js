@@ -86,7 +86,9 @@
       });
     }
 
-    this.open = function(pageName, callback) {
+    this.open = function(pageName, collection, callback) {
+      collection = collection || {};
+
       if(!_this[pageName] || !_this[pageName].name) {
         console.error('Error: "' + pageName + '" is not a page of ' + _name + '.');
         return false;
@@ -100,7 +102,7 @@
       _clearDOM();
       $app.append(_this[_page].compile());
 
-      _this[_page].createDOM($app.children()[_DOMposition], callback);
+      _this[_page].createDOM($app.children()[_DOMposition], collection, callback);
     };
 
     this.pageActive = function() {

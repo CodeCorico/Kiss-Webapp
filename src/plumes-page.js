@@ -45,7 +45,7 @@
       if(oldValue != value) {
         _collection[name] = value;
 
-        _this.fire(name + 'Changed', {
+        _this.fire('collection-' + name, {
           value: value,
           oldValue: oldValue
         });
@@ -55,11 +55,18 @@
     };
 
     this.bind = function(name, func) {
-      _this.on('collection.' + name + 'Changed', function(args) {
+      _this.on('collection.collection-' + name, function(args) {
         func(args.value, args.oldValue);
       });
 
       return _this;
+    };
+
+    this.beforeNav = function(page, func) {
+      _this.on('nav.nav-' + page, function(args) {
+        func(_this.collection(), args.callback);
+        return true;
+      });
     };
 
     function _ready() {
@@ -114,9 +121,30 @@
       });
     }
 
-    this.createDOM = function(dom, callback) {
+    function _openPage(name, collection, onlyProperties) {
+      onlyProperties = onlyProperties || {};
+
+      var sendCollection = {};
+      $.each(onlyProperties, function() {
+        if(typeof collection[this.from] != 'undefined') {
+          var value = collection[this.from];
+          if($.isPlainObject(value)) {
+            value = $.extend(true, {}, value);
+          }
+          else if($.isArray(value)) {
+            value = $.extend(true, [], value);
+          }
+          sendCollection[this.to] = value;
+        }
+      });
+
+      app.open(name, sendCollection);
+    }
+
+    this.createDOM = function(dom, collection, callback) {
       _this.clear();
       _$dom = $(dom);
+      _collection = collection;
 
       _$dom.find('[pl-binded]').each(function() {
         var $this = $(this),
@@ -136,10 +164,35 @@
 
       _$dom.find('[pl-nav-page]').each(function() {
         var $this = $(this),
-            name = $this.attr('pl-nav-page');
+            name = $this.attr('pl-nav-page'),
+            onlyProperties = [],
+            find = 'pl-collection-';
+
+        $.each(this.attributes, function() {
+          if(this.specified && this.name.length > find.length && this.name.substr(0, find.length) == find) {
+            onlyProperties.push({
+              from: this.value,
+              to: this.name.substr(find.length, this.name.length - find.length)
+            });
+          }
+        });
 
         $this.click(function() {
-          app.open(name);
+          var returns = 0,
+              howMany = _this.fire('nav-' + name, {
+                callback: function(collection) {
+                  setTimeout(function() {
+                    returns++;
+                    if(returns >= howMany) {
+                      _openPage(name, collection, onlyProperties);
+                    }
+                  });
+                }
+              }).length;
+
+          if(!howMany) {
+            _openPage(name, _this.collection(), onlyProperties);
+          }
         });
       });
 
@@ -171,6 +224,12 @@
         }
       });
 
+      $.each(_collection, function(name, value) {
+        _this.fire('collection-' + name, {
+          value: value
+        });
+      });
+
       if(_controllers.length) {
         return _callControllers(0, callback);
       }
@@ -185,6 +244,7 @@
       _collection = {};
       _elements = {};
       _this.removeEventsNamespace('collection');
+      _this.removeEventsNamespace('nav');
       _this.el = {};
 
       return _this;

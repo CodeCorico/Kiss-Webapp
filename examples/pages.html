@@ -23,7 +23,7 @@
           console.log('Ready!');
 
           this.ExamplePages.home.controller(function(next) {
-            console.log('Load Home page');
+            console.log('Load Home page', this.collection());
 
             this
               .bind('user', function(value, oldValue) {
@@ -34,17 +34,22 @@
               })
               .bind('userSubmit', function(value) {
                 console.log('[userSubmit] submit', value);
+              })
+              .beforeNav('user', function(collection, callback) {
+                console.log('before navigate to user');
+                collection.hello = 'my hello';
+                callback(collection);
               });
-            //   .beforeNav('user', function(collection, callback) {
-
-            //     callback(collection);
-            //   });
-
-            this.collection('user', 'Xavier');
 
             this.el.inputUser.css('background', 'blue');
 
             console.log('Home page has', this.DOM().children().length, 'children');
+
+            next();
+          });
+
+          this.ExamplePages.user.controller(function(next) {
+            console.log('Load User page', this.collection());
 
             next();
           });
