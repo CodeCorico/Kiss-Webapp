@@ -1,4 +1,4 @@
-$(function() {
+(function() {
   'use strict';
 
   var Plumes = function() {
@@ -66,5 +66,10 @@ $(function() {
   }
 
   window.Plumes = plumes;
+})();
+
+$(function() {
+  'use strict';
+
   window.Plumes.init();
 });

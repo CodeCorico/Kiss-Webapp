@@ -41,11 +41,8 @@
 
       <div class="row">
         <div class="eight columns">
-          <p>
-            <pre class="code-example">
-<code class="code-example-body prettyprint"><!-- index.html -->
-
-<!--
+          <pre class="code-example">
+<code class="code-example-body prettyprint"><!--
 Tells Plumes to be create an app in this portion of the page.
 Use "plumes" attribute with an app name.
 
@@ -59,9 +56,11 @@ Use "plumes" attribute with an app name.
 
 </div>
 </code>
-<code class="code-example-body prettyprint"><!-- page1.html -->
+            <div class="code-file prettyprint prettyprinted">index.html</div>
+          </pre>
 
-<!--
+          <pre class="code-example">
+<code class="code-example-body prettyprint"><!--
 Add "pl-nav-page" to any element with the targeted page name.
 On click, Plumes navigate to the page.
 -->
@@ -72,8 +71,8 @@ On click, Plumes navigate to the page.
   </p>
 </div>
 </code>
-            </pre>
-          </p>
+            <div class="code-file prettyprint prettyprinted">page1.html</div>
+          </pre>
         </div>
         <div class="four columns">
 
@@ -85,11 +84,58 @@ On click, Plumes navigate to the page.
         </div>
       </div>
 
+      <h3>Data Binding</h3>
+
+      <div class="row">
+        <div class="eight columns">
+          <pre class="code-example">
+<code class="code-example-body prettyprint">
+<div plumes="controlPageApp" index="pageBinding">
+  <script type="text/html" pl-page="pageBinding" src="./page-binding.html"></script>
+</div>
+</code>
+            <div class="code-file prettyprint prettyprinted">index.html</div>
+          </pre>
+
+          <pre class="code-example">
+<code class="code-example-body prettyprint"><!--
+Each page has a personnal data collection in key/value format.
+
+The {{key}} are a declarative way of specifying data binding locations in the HTML.
+The key is stored in the page collection.
+Plumes will automatically update this text whenever the "user"'s value changes.
+-->
+<div>
+  <h4>Hello {{user}}!</h4>
+  <p>
+    <!--
+    "pl-bind" links the value DOM element to the collection.
+    This means that any changes to the element value update the
+    collection key.
+    And when you change the data collection, it updates the element.
+    -->
+    <input pl-bind="user" placeholder="Enter a name" />
+  </p>
+</div>
+</code>
+            <div class="code-file prettyprint prettyprinted">page-binding.html</div>
+          </pre>
+        </div>
+        <div class="four columns">
+
+          <div plumes="controlPageApp" index="pageBinding">
+            <script type="text/html" pl-page="pageBinding" src="./examples/page-binding.html"></script>
+          </div>
+
+        </div>
+      </div>
+
     </div>
 
     <div class="docs-section" id="more">
       <h6 class="docs-header">More</h6>
       <p>More.</p>
+            <!--script type="text/javascript" src="./examples/page-binding.js"></script-->
     </div>
 
   </div>
