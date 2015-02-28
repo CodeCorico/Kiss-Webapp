@@ -56,7 +56,7 @@
 
     this.bind = function(name, func) {
       _this.on('collection.collection-' + name, function(args) {
-        func(args.value, args.oldValue);
+        func.call(_this, args.value, args.oldValue);
       });
 
       return _this;
@@ -64,7 +64,7 @@
 
     this.beforeNav = function(page, func) {
       _this.on('nav.nav-' + page, function(args) {
-        func(_this.collection(), args.callback);
+        func.call(this, _this.collection(), args.callback);
         return true;
       });
     };
@@ -79,7 +79,7 @@
 
     this.ready = function(func) {
       if(_isReady) {
-        func();
+        func.call(_this);
         return;
       }
 

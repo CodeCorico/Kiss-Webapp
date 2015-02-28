@@ -69,7 +69,7 @@
 
     this.ready = function(func) {
       if(_isReady) {
-        func();
+        func.call(this);
         return;
       }
 

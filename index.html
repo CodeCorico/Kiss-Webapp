@@ -24,6 +24,8 @@
         <ul class="navbar-list">
           <li class="navbar-item"><a class="navbar-link" href="#intro">Intro</a></li>
           <li class="navbar-item"><a class="navbar-link" href="#examples">Examples</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#doc">Doc</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#todo">Todo</a></li>
           <li class="navbar-item"><a class="navbar-link" href="#more">More</a></li>
         </ul>
       </div>
@@ -42,16 +44,18 @@
       <div class="row">
         <div class="eight columns">
           <pre class="code-example">
-<code class="code-example-body prettyprint"><!--
+<code class="code-example-body prettyprint">
+<!--
 Tells Plumes to be create an app in this portion of the page.
 Use "plumes" attribute with an app name.
+(It's common to use it on <body>.)
 
 "index" defines the first page displayed.
 -->
 <div plumes="singlePageApp" index="page1">
 
   <!-- Define each page of your app with "pl-page". -->
-  <script type="text/html" pl-page="page1" src="./page-1.html" ></script>
+  <script type="text/html" pl-page="page1" src="./page-1.html"></script>
   <script type="text/html" pl-page="page2" src="./page-2.html"></script>
 
 </div>
@@ -60,7 +64,8 @@ Use "plumes" attribute with an app name.
           </pre>
 
           <pre class="code-example">
-<code class="code-example-body prettyprint"><!--
+<code class="code-example-body prettyprint">
+<!--
 Add "pl-nav-page" to any element with the targeted page name.
 On click, Plumes navigate to the page.
 -->
@@ -98,7 +103,8 @@ On click, Plumes navigate to the page.
           </pre>
 
           <pre class="code-example">
-<code class="code-example-body prettyprint"><!--
+<code class="code-example-body prettyprint">
+<!--
 Each page has a personnal data collection in key/value format.
 
 The {{key}} are a declarative way of specifying data binding locations in the HTML.
@@ -123,8 +129,80 @@ Plumes will automatically update this text whenever the "user"'s value changes.
         </div>
         <div class="four columns">
 
-          <div plumes="controlPageApp" index="pageBinding">
+          <div plumes="bindingApp" index="pageBinding">
             <script type="text/html" pl-page="pageBinding" src="./examples/page-binding.html"></script>
+          </div>
+
+        </div>
+      </div>
+
+      <h3>Control of the page</h3>
+
+      <div class="row">
+        <div class="eight columns">
+          <pre class="code-example">
+<code class="code-example-body prettyprint">
+<div plumes="controlApp" index="pageControl">
+  <script type="text/html" pl-page="pageControl" src="./page-control.html"></script>
+</div>
+</code>
+            <div class="code-file prettyprint prettyprinted">index.html</div>
+          </pre>
+
+          <pre class="code-example">
+<code class="code-example-body prettyprint">
+<div>
+  <h4>Square is {{color}}!</h4>
+  <p>
+    <input pl-bind="color" placeholder="Enter a color name" />
+  </p>
+  <!--
+  "pl-element" is used to register an element in page
+  (jQuery object)
+  -->
+  <div pl-element="square" style="width: 40px; height: 40px;"></div>
+</div>
+</code>
+            <div class="code-file prettyprint prettyprinted">page-control.html</div>
+          </pre>
+
+          <pre class="code-example">
+<code class="code-example-body prettyprint">
+// Each page calls its registered controllers after DOM rendered.
+
+window.Plumes.ready(function() {
+  'use strict';
+
+  // "this" returns Plumes.
+
+  this.controlApp.pageControl.controller(function(next) {
+
+    // "this" returns the page.
+
+    // Attach a event when a collection value is changed
+    this.bind('color', function(value) {
+
+      // Each DOM element registered is accessible in "el" property
+      // of the page.
+      this.el.square.css('background', value);
+    });
+
+    // Get or set collection values with "collection()" method.
+    this.collection('color', 'green');
+
+    // Call "next()" to execute the next registered controller.
+    next();
+  });
+
+});
+</code>
+            <div class="code-file prettyprint prettyprinted">page-control.js</div>
+          </pre>
+        </div>
+        <div class="four columns">
+
+          <div plumes="controlApp" index="pageControl">
+            <script type="text/html" pl-page="pageControl" src="./examples/page-control.html"></script>
           </div>
 
         </div>
@@ -132,10 +210,28 @@ Plumes will automatically update this text whenever the "user"'s value changes.
 
     </div>
 
+    <div class="docs-section" id="doc">
+      <h6 class="docs-header">Doc</h6>
+      <p>Todo.</p>
+    </div>
+
+    <div class="docs-section" id="todo">
+      <h6 class="docs-header">Todo</h6>
+      <p>
+        <ul>
+          <li>Routing (urls + history)</li>
+          <li>Page Destroy</li>
+          <li>Accessing sub elements {{user.name}}</li>
+          <li>Loops</li>
+          <li>Components</li>
+          <li>Themes</li>
+        </ul>
+      </p>
+    </div>
+
     <div class="docs-section" id="more">
       <h6 class="docs-header">More</h6>
-      <p>More.</p>
-            <!--script type="text/javascript" src="./examples/page-binding.js"></script-->
+      <p>Todo.</p>
     </div>
 
   </div>
@@ -149,5 +245,7 @@ Plumes will automatically update this text whenever the "user"'s value changes.
   <script type="text/javascript" src="./src/plumes-page.js"></script>
   <script type="text/javascript" src="./src/plumes-app.js"></script>
   <script type="text/javascript" src="./src/plumes.js"></script>
+
+  <script type="text/javascript" src="./examples/page-control.js"></script>
 </body>
 </html>
