@@ -25,9 +25,14 @@
   font-weight: 600;
 }
 
+.title img {
+  width: 580px;
+  max-width: 100%;
+}
+
 @media (min-width: 550px) {
   .header {
-    margin-top: 18rem;
+    margin-top: 5rem;
   }
 
   .docs-section {
