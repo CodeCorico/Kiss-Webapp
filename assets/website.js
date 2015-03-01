@@ -3,6 +3,7 @@ $(function() {
 
   var $window = $(window),
       $body = $('body'),
+      $document = $(document),
       $codeSnippets = $('.code-example-body'),
       $nav = $('.navbar'),
       navOffsetTop = $nav.offset().top,
@@ -19,6 +20,12 @@ $(function() {
     return string.replace(/[&<>"'\/]/g, function (s) {
       return entityMap[s];
     });
+  }
+
+  function _closePopover() {
+    if($('.popover.open').length > 0) {
+      $('.popover').removeClass('open');
+    }
   }
 
   $window.resize(function() {
@@ -38,6 +45,17 @@ $(function() {
     var newContent = _escapeHtml($(this).html());
     $(this).html(newContent);
   });
+
+  $('[data-popover]').on('click', function(e) {
+      e.preventDefault();
+      _closePopover();
+      var popover = $($(this).data('popover'));
+      popover.toggleClass('open');
+      e.stopImmediatePropagation();
+    }
+  );
+
+  $document.on('click', _closePopover);
 
 });
 
