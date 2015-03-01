@@ -5,7 +5,9 @@
 
     window.EventsManager.call(this);
 
-    var _this = this,
+    var COLLECTION_PRE = 'collection-',
+
+        _this = this,
         _isReady = false,
         _onReadyFunctions = [],
         _name = $page.attr('pl-page'),
@@ -32,31 +34,80 @@
       return _src;
     };
 
+    function _fromNamespace(obj, namespace, newValue, index) {
+      index = index || 0;
+      namespace = index === 0 ? namespace.split('.') : namespace;
+
+      if(typeof newValue != 'undefined' && index < namespace.length - 1 && typeof obj[namespace[index]] != 'object') {
+        obj[namespace[index]] = {};
+      }
+
+      if(typeof obj[namespace[index]] != 'undefined' || typeof newValue != 'undefined') {
+        if(index === namespace.length - 1) {
+          if(typeof newValue !== 'undefined') {
+            var oldValue = obj[namespace[index]];
+            obj[namespace[index]] = newValue;
+            return {
+              namespace: namespace,
+              oldValue: oldValue,
+              value: obj[namespace[index]]
+            };
+          }
+          return obj[namespace[index]];
+        }
+
+        return _fromNamespace(obj[namespace[index]], namespace, newValue, index + 1);
+      }
+
+      return;
+    }
+
     this.collection = function(name, value) {
       if(typeof name == 'undefined') {
         return _collection;
       }
 
       if(typeof value == 'undefined') {
-        return _collection[name];
+        return _fromNamespace(_collection, name);
       }
 
-      var oldValue = _collection[name];
-      if(oldValue != value) {
-        _collection[name] = value;
+      var result = _fromNamespace(_collection, name, value);
 
-        _this.fire('collection-' + name, {
-          value: value,
-          oldValue: oldValue
-        });
+      if(result.oldValue != result.value) {
+        var namespace = [],
+            i;
+
+        for(i = 0; i < result.namespace.length; i++) {
+          namespace.push(result.namespace[i]);
+          _this.fire(COLLECTION_PRE + namespace.join('/'), {
+            value: _fromNamespace(_collection, namespace.join('.'))
+          });
+        }
+
+        namespace = COLLECTION_PRE + namespace.join('/') + '/';
+
+        var events = _this.eventsName();
+        for(i = 0; i < events.length; i++) {
+          var event = events[i];
+          if(event.length > namespace.length && event.indexOf(namespace) === 0) {
+            var eventNamespace = event
+              .substr(COLLECTION_PRE.length, event.length - COLLECTION_PRE.length)
+              .replace(/\//g, '.');
+
+            _this.fire(event, {
+              value: _fromNamespace(_collection, eventNamespace)
+            });
+          }
+        }
+
       }
 
       return this;
     };
 
     this.bind = function(name, func) {
-      _this.on('collection.collection-' + name, function(args) {
-        func.call(_this, args.value, args.oldValue);
+      _this.on('collection.' + COLLECTION_PRE + name.replace(/\./g, '/'), function(args) {
+        func.call(_this, args.value);
       });
 
       return _this;
@@ -127,14 +178,7 @@
       var sendCollection = {};
       $.each(onlyProperties, function() {
         if(typeof collection[this.from] != 'undefined') {
-          var value = collection[this.from];
-          if($.isPlainObject(value)) {
-            value = $.extend(true, {}, value);
-          }
-          else if($.isArray(value)) {
-            value = $.extend(true, [], value);
-          }
-          sendCollection[this.to] = value;
+          sendCollection[this.to] = plumes.extendEverything(collection[this.from]);
         }
       });
 
@@ -151,7 +195,7 @@
             name = $this.attr('pl-binded');
 
         _this.bind(name, function(value) {
-          $this.html(value);
+          $this.html(value + '');
         });
       });
 
@@ -169,7 +213,7 @@
             find = 'pl-collection-';
 
         $.each(this.attributes, function() {
-          if(this.specified && this.name.length > find.length && this.name.substr(0, find.length) == find) {
+          if(this.specified && this.name.length > find.length && this.name.indexOf(find) === 0) {
             onlyProperties.push({
               from: this.value,
               to: this.name.substr(find.length, this.name.length - find.length)
@@ -225,9 +269,7 @@
       });
 
       $.each(_collection, function(name, value) {
-        _this.fire('collection-' + name, {
-          value: value
-        });
+        _this.collection(name, plumes.extendEverything(value));
       });
 
       if(_controllers.length) {

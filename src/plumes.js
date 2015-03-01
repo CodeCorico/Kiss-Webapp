@@ -24,6 +24,19 @@
       }
     }
 
+    this.extendEverything = function(anyType) {
+      if(typeof anyType != 'undefined') {
+        if($.isPlainObject(anyType) && anyType) {
+          return $.extend(true, {}, anyType);
+        }
+        else if($.isArray(anyType)) {
+          return $.extend(true, [], anyType);
+        }
+      }
+
+      return anyType;
+    };
+
     this.init = function() {
       $('[plumes]').each(function() {
         var app = new _this.App(_this, $(this));
