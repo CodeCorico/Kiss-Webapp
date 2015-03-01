@@ -170,15 +170,17 @@ Plumes will automatically update this text whenever the "user"'s value changes.
 <code class="code-example-body prettyprint">
 <div>
   <!-- It's possible to use sub properties value -->
-  <h4>Square is {{shapes.color}}!</h4>
+  <h4>Hello {{user.name}}!</h4>
   <p>
-    <input pl-bind="shapes.color" placeholder="Enter a color name" />
+    <input pl-bind="user.name" placeholder="Enter your name" />
   </p>
   <!--
+  "pl-src" is used to bind src resource
+
   "pl-element" is used to register an element in page
   (jQuery object)
   -->
-  <div pl-element="square" style="width: 40px; height: 40px;"></div>
+  <img pl-src="img" pl-element="robot" style="width: 100%;" />
 </div>
 </code>
               <div class="code-file prettyprint prettyprinted">page-control.html</div>
@@ -197,18 +199,27 @@ window.Plumes.ready(function() {
 
     // "this" returns the page.
 
-    // Attach a event when a collection value is changed
+    // Attach an event when a collection value is changed
     // It's possible to bind sub properties
-    this.bind('shapes.color', function(value) {
+    this.bind('user.name', function(value) {
+      if(value) {
+        this.collection('img', 'http://cyborg.namedecoder.com/webimages/edox-' + value.toUpperCase() + '.png');
+      }
+      else {
+        this.collection('img', '');
 
-      // Each DOM element registered is accessible in "el" property
-      // of the page.
-      this.el.square.css('background', value);
+        // Each DOM element registered is accessible in "el" property
+        // of the page.
+        this.el.robot.css({
+          height: '30px',
+          background: 'red'
+        });
+      }
     });
 
     // Get or set collection values with "collection()" method.
-    this.collection('shapes', {
-      color: 'green'
+    this.collection('user', {
+      name: 'Xavier'
     });
 
     // Call "next()" to execute the next registered controller.
@@ -241,7 +252,6 @@ window.Plumes.ready(function() {
       <h6 class="docs-header">Todo</h6>
       <p>
         <ul>
-          <li>pl-src</li>
           <li>Routing (urls + history)</li>
           <li>Loops</li>
           <li>Components</li>
