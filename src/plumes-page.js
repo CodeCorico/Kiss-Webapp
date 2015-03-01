@@ -191,11 +191,18 @@
       _collection = collection;
 
       _$dom.find('[pl-binded]').each(function() {
-        var $this = $(this),
-            name = $this.attr('pl-binded');
+        var $this = $(this);
 
-        _this.bind(name, function(value) {
+        _this.bind($this.attr('pl-binded'), function(value) {
           $this.html(value + '');
+        });
+      });
+
+      _$dom.find('[pl-src]').each(function() {
+        var $this = $(this);
+
+        _this.bind($this.attr('pl-src'), function(value) {
+          $this.attr('src', value + '');
         });
       });
 
