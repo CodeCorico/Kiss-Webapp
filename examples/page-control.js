@@ -3,11 +3,13 @@ window.Plumes.ready(function() {
 
   this.controlApp.pageControl.controller(function(next) {
 
-    this.bind('color', function(value) {
+    this.bind('shapes.color', function(value) {
       this.el.square.css('background', value);
     });
 
-    this.collection('color', 'green');
+    this.collection('shapes', {
+      color: 'green'
+    });
 
     next();
   });

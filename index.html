@@ -169,9 +169,10 @@ Plumes will automatically update this text whenever the "user"'s value changes.
             <pre class="code-example">
 <code class="code-example-body prettyprint">
 <div>
-  <h4>Square is {{color}}!</h4>
+  <!-- It's possible to use sub properties value -->
+  <h4>Square is {{shapes.color}}!</h4>
   <p>
-    <input pl-bind="color" placeholder="Enter a color name" />
+    <input pl-bind="shapes.color" placeholder="Enter a color name" />
   </p>
   <!--
   "pl-element" is used to register an element in page
@@ -197,7 +198,8 @@ window.Plumes.ready(function() {
     // "this" returns the page.
 
     // Attach a event when a collection value is changed
-    this.bind('color', function(value) {
+    // It's possible to bind sub properties
+    this.bind('shapes.color', function(value) {
 
       // Each DOM element registered is accessible in "el" property
       // of the page.
@@ -205,7 +207,9 @@ window.Plumes.ready(function() {
     });
 
     // Get or set collection values with "collection()" method.
-    this.collection('color', 'green');
+    this.collection('shapes', {
+      color: 'green'
+    });
 
     // Call "next()" to execute the next registered controller.
     next();
