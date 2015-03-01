@@ -100,9 +100,18 @@
 
       _page = pageName;
       _clearDOM();
-      $app.append(_this[_page].compile());
 
-      _this[_page].createDOM($app.children()[_DOMposition], collection, callback);
+      var page = _this[_page];
+
+      page.compile(function() {
+        page.link(collection, function($dom) {
+          $app.append($dom);
+
+          if(callback) {
+            callback();
+          }
+        });
+      });
     };
 
     this.pageActive = function() {

@@ -241,6 +241,28 @@ window.Plumes.ready(function() {
         </div>
       </div>
 
+      <div class="docs-section" id="exampleLoops">
+
+        <h3>Loops</h3>
+
+        <div class="row">
+          <div class="eight columns">
+            <pre class="code-example">
+  <code class="code-example-body prettyprint">
+  </code>
+              <div class="code-file prettyprint prettyprinted">index.html</div>
+            </pre>
+          </div>
+          <div class="four columns">
+
+            <div plumes="loopsApp" index="pageLoops">
+              <script type="text/html" pl-page="pageLoops" src="./examples/page-loops.html"></script>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="docs-section" id="doc">
@@ -252,8 +274,10 @@ window.Plumes.ready(function() {
       <h6 class="docs-header">Todo</h6>
       <p>
         <ul>
-          <li>Routing (urls + history)</li>
           <li>Loops</li>
+          <li>Converters</li>
+          <li>Loops - infinite data</li>
+          <li>Routing (urls + history)</li>
           <li>Components</li>
           <li>Themes</li>
           <li>Analytics + share buttons</li>
@@ -274,10 +298,12 @@ window.Plumes.ready(function() {
   <script type="text/javascript" src="./assets/website.js"></script>
 
   <script type="text/javascript" src="./src/vendor/events-manager/events-manager.js"></script>
+  <script type="text/javascript" src="./src/plumes-component.js"></script>
   <script type="text/javascript" src="./src/plumes-page.js"></script>
   <script type="text/javascript" src="./src/plumes-app.js"></script>
   <script type="text/javascript" src="./src/plumes.js"></script>
 
   <script type="text/javascript" src="./examples/page-control.js"></script>
+  <script type="text/javascript" src="./examples/page-loops.js"></script>
 </body>
 </html>

@@ -153,14 +153,6 @@
       _controllers.push(func);
     };
 
-    this.compile = function() {
-      if(!_compile) {
-        _compile = _template.replace(/({{(.*?)}})/g, '<span pl-binded="$2"></span>');
-      }
-
-      return _compile;
-    };
-
     function _callControllers(i, callback) {
       _controllers[i].call(_this, function() {
         if(i < _controllers.length - 1) {
@@ -185,10 +177,38 @@
       app.open(name, sendCollection);
     }
 
-    this.createDOM = function(dom, collection, callback) {
+    function _applyComponents($dom, callback) {
+      var $components = $dom.find('[pl-component]');
+      if($components.length > 0) {
+
+        plumes.component($($components.get(0)), function() {
+          _template = $('<div />').append($dom).html();
+          _applyComponents(callback);
+        });
+
+        return;
+      }
+
+      if(callback) {
+        callback();
+      }
+    }
+
+    this.compile = function(callback) {
+      var $dom = $(_template);
+
+      _applyComponents($dom, function() {
+        if(callback) {
+          callback();
+        }
+      });
+    };
+
+    this.link = function(collection, callback) {
       _this.clear();
-      _$dom = $(dom);
       _collection = collection;
+
+      _$dom = $(_template.replace(/({{(.*?)}})/g, '<span pl-binded="$2"></span>'));
 
       _$dom.find('[pl-binded]').each(function() {
         var $this = $(this);
@@ -280,11 +300,15 @@
       });
 
       if(_controllers.length) {
-        return _callControllers(0, callback);
+        return _callControllers(0, function() {
+          if(callback) {
+            callback(_$dom);
+          }
+        });
       }
 
       if(callback) {
-        callback();
+        callback(_$dom);
       }
     };
 

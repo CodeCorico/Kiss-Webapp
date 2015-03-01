@@ -1,0 +1,16 @@
+<div>
+  <div pl-component="./examples/component-user.html"></div>
+  <div pl-component="./examples/component-user.html"></div>
+  <div pl-component="./examples/component-user.html"></div>
+
+  <h4>My {{tasks.length}} tasks</h4>
+  <p>
+    <form pl-bind="addForm">
+      <input pl-element="newTaskInput" pl-bind="newTask" placeholder="Enter a task" />
+      <input type="submit" value="Add" />
+    </form>
+  </p>
+  <ul pl-list="tasks">
+    <li>{{$index}}/{{$length}} - {{text}}</li>
+  </ul>
+</div>

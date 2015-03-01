@@ -9,7 +9,8 @@
         _isReady = false,
         _appsReady = 0,
         _appsCount = 0,
-        _onReadyFunctions = [];
+        _onReadyFunctions = [],
+        _components = {};
 
     function _ready(force) {
       force = force || false;
@@ -66,6 +67,32 @@
       }
 
       _onReadyFunctions.push(func);
+    };
+
+    this.component = function($component, callback) {
+      var src = $component.attr('pl-component');
+
+      $component
+        .removeAttr('pl-component')
+        .attr('pl-comp', src);
+
+      if(_components[src]) {
+        $component.html(_components[src]);
+
+        if(callback) {
+          callback();
+        }
+
+        return;
+      }
+
+      $component.load(src, function() {
+        _components[src] = $component.html();
+
+        if(callback) {
+          callback();
+        }
+      });
     };
   };
 
