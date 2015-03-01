@@ -95,7 +95,7 @@
       }
 
       if(_page) {
-        _this[_page].clear();
+        _this[_page].destroy();
       }
 
       _page = pageName;

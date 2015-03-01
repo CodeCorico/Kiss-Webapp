@@ -250,6 +250,20 @@
       return _this;
     };
 
+    this.destroy = function(func) {
+      if(func) {
+        _this.on('destroy', function() {
+          func.call(_this);
+        });
+        return _this;
+      }
+
+      _this.fire('destroy');
+      _this.clear();
+
+      return _this;
+    };
+
     this.DOM = function() {
       return _$dom;
     };

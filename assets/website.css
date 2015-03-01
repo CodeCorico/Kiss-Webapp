@@ -50,7 +50,7 @@
   word-wrap: break-word;
 }
 
-a, a:hover, a:visited {
+.pl-nav-page, .pl-nav-page:hover, .pl-nav-page:visited {
   cursor: pointer;
   text-decoration: underline;
 }
