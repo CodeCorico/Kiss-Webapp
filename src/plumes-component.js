@@ -12,7 +12,8 @@
         _collection = null,
         _template = '',
         _templateSrc = null,
-        _controllers = null;
+        _controllers = null,
+        _converters = {};
 
     this.el = {};
 
@@ -237,6 +238,15 @@
       return _this;
     };
 
+    function _bindAttribute(key) {
+      key = (key + ':').split(':');
+
+      return {
+        key: key[0],
+        converter: key.length > 1 ? key[1] : null
+      };
+    }
+
     this.link = function(collection, callback) {
       _collection = collection || {};
 
@@ -253,17 +263,27 @@
       }
 
       _findInScope('[pl-value]').each(function() {
-        var $this = $(this);
+        var $this = $(this),
+            attr = _bindAttribute($this.attr('pl-value'));
 
-        _this.bind($this.attr('pl-value'), function(value) {
+        _this.bind(attr.key, function(value) {
+          if(attr.converter) {
+            value = _this.convert(attr.converter, value);
+          }
+
           $this.html(value + '');
         });
       });
 
       _findInScope('[pl-src]').each(function() {
-        var $this = $(this);
+        var $this = $(this),
+            attr = _bindAttribute($this.attr('pl-src'));
 
-        _this.bind($this.attr('pl-src'), function(value) {
+        _this.bind(attr.key, function(value) {
+          if(attr.converter) {
+            value = _this.convert(attr.converter, value);
+          }
+
           $this.attr('src', value + '');
         });
       });
@@ -313,28 +333,32 @@
 
       _findInScope('[pl-bind]').each(function() {
         var $this = $(this),
-            name = $this.attr('pl-bind'),
+            attr = _bindAttribute($this.attr('pl-bind')),
             type = ($this.attr('type') || '').toLowerCase(),
             tagName = $this.get(0).tagName.toLowerCase();
 
         if(tagName == 'button' || (tagName == 'input' && (type == 'button' || type == 'submit'))) {
           $this.bind('click', function() {
-            _this.collection(name, (_this.collection(name) || 0) + 1);
+            _this.collection(attr.key, (_this.collection(attr.key) || 0) + 1);
           });
         }
         else if(tagName == 'input' || tagName == 'textarea') {
-          _this.bind(name, function(value) {
-            $this.val(value);
+          _this.bind(attr.key, function(value) {
+            if(attr.converter) {
+              value = _this.convert(attr.converter, value);
+            }
+
+            $this.val(value + '');
           });
 
           $this.bind('propertychange change click keyup input paste', function() {
-            _this.collection(name, $this.val());
+            _this.collection(attr.key, $this.val());
           });
         }
         else if(tagName == 'form') {
           $this.submit(function(event) {
             event.preventDefault();
-            _this.collection(name, (_this.collection(name) || 0) + 1);
+            _this.collection(attr.key, (_this.collection(attr.key) || 0) + 1);
           });
         }
       });
@@ -378,6 +402,33 @@
 
     this.dom = function() {
       return $component;
+    };
+
+    this.converter = function(name, func) {
+      _converters[name] = _converters[name] || null;
+
+      if(typeof func == 'function') {
+        _converters[name] = func;
+      }
+
+      return _converters[name];
+    };
+
+    this.convert = function(name, value) {
+      var converter = _this.converter(name);
+
+      if(!converter && $component.attr('pl-component')) {
+        converter = page.converter(name);
+      }
+      if(!converter) {
+        converter = plumes.converter(name);
+      }
+
+      if(converter) {
+         return converter.call(this, value);
+      }
+
+      return value;
     };
 
   };

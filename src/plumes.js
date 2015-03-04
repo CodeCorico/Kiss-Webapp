@@ -12,6 +12,7 @@
         _onReadyFunctions = [],
         _components = {},
         _componentsTemplate = {},
+        _converters = {},
         _uid = 0;
 
     function _ready(force) {
@@ -102,6 +103,16 @@
       }
 
       return _components[name];
+    };
+
+    this.converter = function(name, func) {
+      _converters[name] = _converters[name] || null;
+
+      if(typeof func == 'function') {
+        _converters[name] = func;
+      }
+
+      return _converters[name];
     };
   };
 
