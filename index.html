@@ -171,9 +171,10 @@ Plumes will automatically update this text whenever the "user"'s value changes.
 <code class="code-example-body prettyprint">
 <div>
   <!-- It's possible to use sub properties value -->
-  <h4>Hello {{robot.name}}!</h4>
+  <!-- Add ":" to set a converter function -->
+  <h4>Hello {{robot.name:upper}}!</h4>
   <p>
-    <input pl-bind="robot.name" placeholder="Enter a robot name" />
+    <input pl-bind="robot.name:upper" placeholder="Enter a robot name" />
   </p>
   <!--
   "pl-src" is used to bind src resource
@@ -196,6 +197,11 @@ window.Plumes.ready(function() {
 
   // "this" returns Plumes.
 
+  // Converters can be register to Plumes, page or components
+  this.converter('upper', function(value) {
+    return (value + '').toUpperCase();
+  });
+
   // Many controllers can be registered to a page.
   this.controlApp.pageControl.controller(function(next) {
 
@@ -205,7 +211,7 @@ window.Plumes.ready(function() {
     // It's possible to bind sub properties
     this.bind('robot.name', function(value) {
       if(value) {
-        this.collection('img', 'http://cyborg.namedecoder.com/webimages/edox-' + value.toUpperCase() + '.png');
+        this.collection('img', 'http://cyborg.namedecoder.com/webimages/edox-' + value + '.png');
         this.el.avatar.css({
           height: '',
           background: ''
@@ -365,10 +371,8 @@ window.Plumes.ready(function() {
       <p>
         <ul>
           <li>Loops</li>
-          <li>Converters</li>
           <li>Loops - infinite data</li>
           <li>Routing (urls + history)</li>
-          <li>Components</li>
           <li>Themes</li>
           <li>Analytics + share buttons</li>
         </ul>
