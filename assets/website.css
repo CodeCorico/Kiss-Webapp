@@ -55,6 +55,14 @@
   text-decoration: underline;
 }
 
+.user-badge {
+  border: 2px solid red;
+  margin-top: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
 @media (min-width: 550px) {
   .header {
     margin-top: 5rem;

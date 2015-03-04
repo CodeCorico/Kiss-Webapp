@@ -1,7 +1,9 @@
 window.Plumes.ready(function() {
   'use strict';
 
-  this.controlApp.pageControl.controller(function(next) {
+  this.component('robot', function(next) {
+
+    this.el.robot.css('border-color', this.collection('index') === 1 ? 'red' : 'green');
 
     this.bind('robot.name', function(value) {
       if(value) {
@@ -18,11 +20,17 @@ window.Plumes.ready(function() {
           background: 'red'
         });
       }
+
+      this.page().collection('robot' + this.collection('index'), value);
     });
 
-    this.collection('robot', {
-      name: 'Xavier'
-    });
+    next();
+  });
+
+  this.componentsApp.pageComponents.controller(function(next) {
+
+    this.collection('index1', 1);
+    this.collection('index2', 2);
 
     next();
   });

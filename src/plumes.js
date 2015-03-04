@@ -10,7 +10,9 @@
         _appsReady = 0,
         _appsCount = 0,
         _onReadyFunctions = [],
-        _components = {};
+        _components = {},
+        _componentsTemplate = {},
+        _uid = 0;
 
     function _ready(force) {
       force = force || false;
@@ -69,30 +71,37 @@
       _onReadyFunctions.push(func);
     };
 
-    this.component = function($component, callback) {
-      var src = $component.attr('pl-component');
-
-      $component
-        .removeAttr('pl-component')
-        .attr('pl-comp', src);
-
-      if(_components[src]) {
-        $component.html(_components[src]);
-
+    this.registerTemplate = function(src, callback) {
+      if(_componentsTemplate[src]) {
         if(callback) {
-          callback();
+          callback(_componentsTemplate[src]);
         }
 
         return;
       }
 
-      $component.load(src, function() {
-        _components[src] = $component.html();
+      var $div = $('<div />');
+
+      $div.load(src + '?_t=' + (new Date().getTime()) + (++_uid), function() {
+        _componentsTemplate[src] = $div.html()
+          .replace(/({{(.*?)}})/g, '<span pl-value="$2"></span>');
 
         if(callback) {
-          callback();
+          callback(_componentsTemplate[src]);
         }
       });
+    };
+
+    this.component = function(name, controller) {
+      _components[name] = _components[name] || {
+        controllers: []
+      };
+
+      if(typeof controller == 'function') {
+        _components[name].controllers.push(controller);
+      }
+
+      return _components[name];
     };
   };
 

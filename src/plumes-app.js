@@ -9,8 +9,6 @@
         _name = $app.attr('plumes') || null,
         _index = $app.attr('index') || null,
         _isReady = false,
-        _pagesReady = 0,
-        _pagesCount = 0,
         _onReadyFunctions = [],
         _DOMposition = 0,
         _page = null;
@@ -25,10 +23,7 @@
     };
 
     function _ready() {
-      _pagesReady++;
-      if(_pagesReady >= _pagesCount) {
-        _isReady = true;
-
+      setTimeout(function() {
         for(var i = 0; i < _onReadyFunctions.length; i++) {
           _onReadyFunctions[i]();
         }
@@ -36,13 +31,14 @@
         if(_index && _this[_index] && _this[_index].name) {
           return _this.open(_index);
         }
-      }
+      });
     }
 
     function _collectPages() {
       $app.find('[pl-page]').each(function() {
-        var $this = $(this);
-        var page = new plumes.Page(plumes, _this, $this);
+        var $this = $(this),
+            page = new plumes.Page(plumes, _this, $this);
+
         if(page) {
           var pageName = page.name();
 
@@ -51,14 +47,11 @@
             return;
           }
 
-          page.ready(function() {
-            _ready();
-          });
           _this[pageName] = page;
-          _pagesCount++;
-          page.init();
         }
       });
+
+      _ready();
     }
 
     this.init = function() {
