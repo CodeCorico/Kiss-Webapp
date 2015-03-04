@@ -196,6 +196,7 @@ window.Plumes.ready(function() {
 
   // "this" returns Plumes.
 
+  // Many controllers can be registered to a page.
   this.controlApp.pageControl.controller(function(next) {
 
     // "this" returns the page.
@@ -253,9 +254,93 @@ window.Plumes.ready(function() {
         <div class="row">
           <div class="eight columns">
             <pre class="code-example">
-  <code class="code-example-body prettyprint">
-  </code>
+<code class="code-example-body prettyprint">
+<div plumes="componentsApp" index="pageComponents">
+  <script type="text/html" pl-page="pageComponents" src="./examples/page-components.html"></script>
+</div>
+</code>
               <div class="code-file prettyprint prettyprinted">index.html</div>
+            </pre>
+
+            <pre class="code-example">
+<code class="code-example-body prettyprint">
+<div>
+  <h4>Hello {{robot1}} &amp; {{robot2}}!</h4>
+
+  <!--
+  Generic components can be stored in templates HTML files and called by "pl-component-src"
+  A component is independant and works exactly like a page.
+
+  "pl-collection-index" is used to bind the page collection to the component collection.
+
+  Components can contains other components but they can't bind together.
+  -->
+  <div pl-component-src="./examples/component-robot.html" pl-collection-index="index1"></div>
+  <div pl-component-src="./examples/component-robot.html" pl-collection-index="index2"></div>
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">page-components.html</div>
+            </pre>
+
+            <pre class="code-example">
+<code class="code-example-body prettyprint">
+<!--
+When the template compiles, the "pl-component" element replace the "pl-component-src" in the DOM.
+-->
+<div pl-component="robot" class="user-badge">
+  <input pl-bind="robot.name" placeholder="Enter a robot name" />
+  <img pl-src="img" pl-element="avatar" style="width: 100%;" />
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">component-robot.html</div>
+            </pre>
+
+            <pre class="code-example">
+<code class="code-example-body prettyprint">
+window.Plumes.ready(function() {
+  'use strict';
+
+  // Each generic "robot" component calls this controller
+  this.component('robot', function(next) {
+
+    // "index" value is given by the page with the "pl-collection-index" attribute
+    this.el.robot.css('border-color', this.collection('index') === 1 ? 'red' : 'green');
+
+    this.bind('robot.name', function(value) {
+      if(value) {
+        this.collection('img', 'http://cyborg.namedecoder.com/webimages/edox-' + value.toUpperCase() + '.png');
+        this.el.avatar.css({
+          height: '',
+          background: ''
+        });
+      }
+      else {
+        this.collection('img', '');
+        this.el.avatar.css({
+          height: '30px',
+          background: 'red'
+        });
+      }
+
+      // Update the page collection
+      this.page().collection('robot' + this.collection('index'), value);
+    });
+
+    next();
+  });
+
+  this.componentsApp.pageComponents.controller(function(next) {
+
+    // Update immediately the "index" value of "robot" components
+    this.collection('index1', 1);
+    this.collection('index2', 2);
+
+    next();
+  });
+
+});
+</code>
+              <div class="code-file prettyprint prettyprinted">page-components.js</div>
             </pre>
           </div>
           <div class="four columns">
