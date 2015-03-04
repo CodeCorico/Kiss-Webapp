@@ -1,0 +1,20 @@
+{
+  "name": "Plumes",
+  "version": "0.0.0",
+  "homepage": "https://github.com/CodeCorico/Plumes",
+  "bugs": "https://github.com/CodeCorico/Plumes/issues",
+  "authors": [
+    "CodeCorico <hello@codecorico.com>"
+  ],
+  "keywords": [
+    "webapp",
+    "single-page",
+    "plumes",
+    "templates"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeCorico/Plumes.git"
+  }
+}
