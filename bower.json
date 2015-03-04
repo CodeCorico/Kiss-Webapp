@@ -21,6 +21,6 @@
     "tests"
   ],
   "dependencies": {
-    "events-manager": "~1.0.2"
+    "events-manager": "~1.0.3"
   }
 }
