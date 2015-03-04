@@ -5,7 +5,7 @@
   "authors": [
     "CodeCorico <hello@codecorico.com>"
   ],
-  "main": "plumes.js",
+  "main": "plumes.min.js",
   "keywords": [
     "webapp", "single-page", "plumes", "templates"
   ],
