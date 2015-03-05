@@ -368,8 +368,92 @@ window.Plumes.ready(function() {
 
             <pre class="code-example">
 <code class="code-example-body prettyprint">
+<div plumes="appList" index="pageList">
+  <script type="text/html" pl-page="pageList" src="./examples/page-list.html"></script>
+</div>
 </code>
               <div class="code-file prettyprint prettyprinted">index.html</div>
+            </pre>
+
+            <pre class="code-example">
+<code class="code-example-body prettyprint">
+<div>
+  <h4>My {{tasks.length}} robots</h4>
+  <!--
+  Bind form fire binding on submit
+  -->
+  <form pl-bind="addForm">
+    <input pl-element="newRobotInput" pl-bind="newRobot" placeholder="Enter a new robot name" />
+    <input type="submit" value="Add" />
+  </form>
+
+  <!--
+  "pl-list" is used to duplicate its content from an array value.
+  It can takes a converter at the end of the syntax.
+
+  It's not possible to create a controller for a list.
+
+  "robots" is a collection key/value of the page
+  "robot" is a new collection key/value for each item
+  "{{$index}}" is a keywork for showing the item index
+  "{{$length}}" is a keywork for showing the "robots" total length
+  "{{color}}" is binded from the list container.
+  -->
+  <ul pl-list="robot in robots:upper">
+    <li>{{$index}}/{{$length}} - {{robot.text}} is a {{type}}</li>
+  </ul>
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">page-list.html</div>
+            </pre>
+
+            <pre class="code-example">
+<code class="code-example-body prettyprint">
+window.Plumes.ready(function() {
+  'use strict';
+
+  // The list converter get the list and modify it
+  this.converter('upper', function(list) {
+    $.each(list, function() {
+      this.text = this.text.toUpperCase();
+    });
+
+    return list;
+  });
+
+  this.appList.pageList.controller(function(next) {
+
+    // Each time the "robot" key/value is modified the list is updated
+    // To optimize the DOM rendering, only changed elements are rendered
+
+    this.bind('addForm', function() {
+      var newRobot = this.collection('newRobot');
+      if(newRobot) {
+        var robots = this.collection('robots').map(function(robot) {
+          return robot;
+        });
+        robots.push({
+          text: newRobot
+        });
+        this.collection('robots', robots);
+        this.el.newRobotInput.val('');
+      }
+    });
+
+    this.collection('robots', [{
+      text: 'Xavier'
+    }, {
+      text: 'Guillaume'
+    }]);
+
+    this.collection('type', 'robot');
+
+    next();
+  });
+
+});
+</code>
+              <div class="code-file prettyprint prettyprinted">page-list.html</div>
             </pre>
           </div>
           <div class="four columns">
@@ -393,7 +477,6 @@ window.Plumes.ready(function() {
       <h6 class="docs-header">Todo</h6>
       <p>
         <ul>
-          <li>Loops</li>
           <li>Loops - infinite data</li>
           <li>Routing (urls + history)</li>
           <li>Themes</li>

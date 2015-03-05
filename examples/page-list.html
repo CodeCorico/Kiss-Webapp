@@ -1,12 +1,11 @@
 <div>
-  <h4>My {{tasks.length}} tasks</h4>
-  <p>
-    <form pl-bind="addForm">
-      <input pl-element="newTaskInput" pl-bind="newTask" placeholder="Enter a task" />
-      <input type="submit" value="Add" />
-    </form>
-  </p>
-  <ul pl-list="task in tasks">
-    <li>{{$index}}/{{$length}} - {{task.text}} - {{user}}</li>
+  <h4>My {{tasks.length}} robots</h4>
+  <form pl-bind="addForm">
+    <input pl-element="newRobotInput" pl-bind="newRobot" placeholder="Enter a new robot name" />
+    <input type="submit" value="Add" />
+  </form>
+
+  <ul pl-list="robot in robots:upper">
+    <li>{{$index}}/{{$length}} - {{robot.text}} is a {{type}}</li>
   </ul>
 </div>

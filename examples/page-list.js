@@ -1,29 +1,37 @@
 window.Plumes.ready(function() {
   'use strict';
 
+  this.converter('upper', function(list) {
+    $.each(list, function() {
+      this.text = this.text.toUpperCase();
+    });
+
+    return list;
+  });
+
   this.appList.pageList.controller(function(next) {
 
     this.bind('addForm', function() {
-      var newTask = this.collection('newTask');
-      if(newTask) {
-        var tasks = this.collection('tasks').map(function(task) {
-          return task;
+      var newRobot = this.collection('newRobot');
+      if(newRobot) {
+        var robots = this.collection('robots').map(function(robot) {
+          return robot;
         });
-        tasks.push({
-          text: newTask
+        robots.push({
+          text: newRobot
         });
-        this.collection('tasks', tasks);
-        this.el.newTaskInput.val('');
+        this.collection('robots', robots);
+        this.el.newRobotInput.val('');
       }
     });
 
-    this.collection('tasks', [{
-      text: 'Buy milk'
+    this.collection('robots', [{
+      text: 'Xavier'
     }, {
-      text: 'Update my apps'
+      text: 'Guillaume'
     }]);
 
-    this.collection('user', 'Xavier');
+    this.collection('type', 'robot');
 
     next();
   });
