@@ -27,7 +27,7 @@ window.Plumes.ready(function() {
     next();
   });
 
-  this.componentsApp.pageComponents.controller(function(next) {
+  this.appComponents.pageComponents.controller(function(next) {
 
     this.collection('index1', 1);
     this.collection('index2', 2);

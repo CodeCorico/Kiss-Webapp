@@ -13,7 +13,8 @@
         _template = '',
         _templateSrc = null,
         _controllers = null,
-        _converters = {};
+        _converters = {},
+        _lists = [];
 
     this.el = {};
 
@@ -29,7 +30,11 @@
       return page;
     };
 
-    this.template = function() {
+    this.template = function(template) {
+      if(typeof template != 'undefined') {
+        _template = template;
+      }
+
       return _template;
     };
 
@@ -77,7 +82,7 @@
       return;
     }
 
-    function _findCollectionConverters(element, eachFunc) {
+    function _findCollectionInherits(element, eachFunc) {
       element = element.jquery ? element.get(0) : element;
 
       var find = 'pl-collection-';
@@ -174,6 +179,21 @@
       });
     }
 
+    function _compileLists($subcomponents) {
+      $subcomponents.each(function() {
+        var $this = $(this);
+
+        new plumes.List(plumes, app, page, _this, $this)
+          .compile();
+      });
+    }
+
+    function _linkLists() {
+      $.each(_lists, function() {
+        this.link();
+      });
+    }
+
     function _compileSubcomponents($subcomponents, callback, index) {
       index = index || 0;
       if(index < $subcomponents.length) {
@@ -202,11 +222,11 @@
         return _this;
       }
 
-      if($component.attr('pl-component-src')) {
-        var converters = [];
+      if($component && $component.attr('pl-component-src')) {
+        var inherits = [];
 
-        _findCollectionConverters($component, function() {
-          converters.push(this);
+        _findCollectionInherits($component, function() {
+          inherits.push(this);
         });
 
         $component.html(_template);
@@ -215,7 +235,7 @@
         $component = $insideComponent;
         _name = $component.attr('pl-component');
 
-        $.each(converters, function() {
+        $.each(inherits, function() {
           $component.attr('pl-collection-' + this.name, this.value);
         });
 
@@ -228,6 +248,8 @@
           .get(0)
         );
       }
+
+      _compileLists($component.find('[pl-list]'));
 
       _compileSubcomponents($component.find('[pl-component-src]'), function() {
         if(callback) {
@@ -251,7 +273,7 @@
       _collection = collection || {};
 
       if($component.attr('pl-component')) {
-        _findCollectionConverters($component, function() {
+        _findCollectionInherits($component, function() {
           var attr = this;
 
           page.bind(attr.value, function(value) {
@@ -304,7 +326,7 @@
             name = $this.attr('pl-nav-page'),
             onlyProperties = [];
 
-        _findCollectionConverters(this, function() {
+        _findCollectionInherits(this, function() {
           onlyProperties.push({
               from: this.value,
               to: this.name
@@ -372,6 +394,9 @@
 
       if(controllers.length) {
         return _callControllers(controllers, 0, function() {
+
+          _linkLists();
+
           _this.fire('linked');
 
           if(callback) {
@@ -379,6 +404,8 @@
           }
         });
       }
+
+      _linkLists();
 
       _this.fire('linked');
 
@@ -429,6 +456,10 @@
       }
 
       return value;
+    };
+
+    this.registerList = function(list) {
+      _lists.push(list);
     };
 
   };

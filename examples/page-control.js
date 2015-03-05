@@ -5,7 +5,7 @@ window.Plumes.ready(function() {
     return (value + '').toUpperCase();
   });
 
-  this.controlApp.pageControl.controller(function(next) {
+  this.appControl.pageControl.controller(function(next) {
 
     this.bind('robot.name', function(value) {
       if(value) {

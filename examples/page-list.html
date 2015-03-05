@@ -6,7 +6,7 @@
       <input type="submit" value="Add" />
     </form>
   </p>
-  <ul pl-list="tasks">
-    <li>{{$index}}/{{$length}} - {{text}}</li>
+  <ul pl-list="task in tasks">
+    <li>{{$index}}/{{$length}} - {{task.text}} - {{user}}</li>
   </ul>
 </div>

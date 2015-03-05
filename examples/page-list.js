@@ -1,7 +1,7 @@
 window.Plumes.ready(function() {
   'use strict';
 
-  this.loopsApp.pageLoops.controller(function(next) {
+  this.appList.pageList.controller(function(next) {
 
     this.bind('addForm', function() {
       var newTask = this.collection('newTask');
@@ -23,10 +23,7 @@ window.Plumes.ready(function() {
       text: 'Update my apps'
     }]);
 
-    this.collection('user', {
-      name: 'Xavier',
-      age: 29
-    });
+    this.collection('user', 'Xavier');
 
     next();
   });

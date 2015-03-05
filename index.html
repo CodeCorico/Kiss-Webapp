@@ -64,7 +64,7 @@ Use "plumes" attribute with an app name.
 
 "index" defines the first page displayed.
 -->
-<div plumes="singlePageApp" index="page1">
+<div plumes="appSinglePage" index="page1">
 
   <!-- Define each page of your app with "pl-page". -->
   <script type="text/html" pl-page="page1" src="./page-1.html"></script>
@@ -93,7 +93,7 @@ On click, Plumes navigate to the page.
           </div>
           <div class="four columns">
 
-            <div plumes="singlePageApp" index="page1">
+            <div plumes="appSinglePage" index="page1">
               <script type="text/html" pl-page="page1" src="./examples/page-1.html"></script>
               <script type="text/html" pl-page="page2" src="./examples/page-2.html"></script>
             </div>
@@ -110,7 +110,7 @@ On click, Plumes navigate to the page.
           <div class="eight columns">
             <pre class="code-example">
 <code class="code-example-body prettyprint">
-<div plumes="controlPageApp" index="pageBinding">
+<div plumes="appBinding" index="pageBinding">
   <script type="text/html" pl-page="pageBinding" src="./page-binding.html"></script>
 </div>
 </code>
@@ -144,7 +144,7 @@ Plumes will automatically update this text whenever the "user"'s value changes.
           </div>
           <div class="four columns">
 
-            <div plumes="bindingApp" index="pageBinding">
+            <div plumes="appBinding" index="pageBinding">
               <script type="text/html" pl-page="pageBinding" src="./examples/page-binding.html"></script>
             </div>
 
@@ -160,7 +160,7 @@ Plumes will automatically update this text whenever the "user"'s value changes.
           <div class="eight columns">
             <pre class="code-example">
   <code class="code-example-body prettyprint">
-  <div plumes="controlApp" index="pageControl">
+  <div plumes="appControl" index="pageControl">
     <script type="text/html" pl-page="pageControl" src="./page-control.html"></script>
   </div>
   </code>
@@ -203,7 +203,7 @@ window.Plumes.ready(function() {
   });
 
   // Many controllers can be registered to a page.
-  this.controlApp.pageControl.controller(function(next) {
+  this.appControl.pageControl.controller(function(next) {
 
     // "this" returns the page.
 
@@ -245,7 +245,7 @@ window.Plumes.ready(function() {
           </div>
           <div class="four columns">
 
-            <div plumes="controlApp" index="pageControl">
+            <div plumes="appControl" index="pageControl">
               <script type="text/html" pl-page="pageControl" src="./examples/page-control.html"></script>
             </div>
 
@@ -261,7 +261,7 @@ window.Plumes.ready(function() {
           <div class="eight columns">
             <pre class="code-example">
 <code class="code-example-body prettyprint">
-<div plumes="componentsApp" index="pageComponents">
+<div plumes="appComponents" index="pageComponents">
   <script type="text/html" pl-page="pageComponents" src="./examples/page-components.html"></script>
 </div>
 </code>
@@ -335,7 +335,7 @@ window.Plumes.ready(function() {
     next();
   });
 
-  this.componentsApp.pageComponents.controller(function(next) {
+  this.appComponents.pageComponents.controller(function(next) {
 
     // Update immediately the "index" value of "robot" components
     this.collection('index1', 1);
@@ -351,8 +351,31 @@ window.Plumes.ready(function() {
           </div>
           <div class="four columns">
 
-            <div plumes="componentsApp" index="pageComponents">
+            <div plumes="appComponents" index="pageComponents">
               <script type="text/html" pl-page="pageComponents" src="./examples/page-components.html"></script>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="docs-section" id="exampleComponents">
+
+        <h3>Lists</h3>
+
+        <div class="row">
+          <div class="eight columns">
+
+            <pre class="code-example">
+<code class="code-example-body prettyprint">
+</code>
+              <div class="code-file prettyprint prettyprinted">index.html</div>
+            </pre>
+          </div>
+          <div class="four columns">
+
+            <div plumes="appList" index="pageList">
+              <script type="text/html" pl-page="pageList" src="./examples/page-list.html"></script>
             </div>
 
           </div>
@@ -393,11 +416,13 @@ window.Plumes.ready(function() {
 
   <script type="text/javascript" src="./src/vendor/events-manager/events-manager.js"></script>
   <script type="text/javascript" src="./src/plumes-component.js"></script>
+  <script type="text/javascript" src="./src/plumes-list.js"></script>
   <script type="text/javascript" src="./src/plumes-page.js"></script>
   <script type="text/javascript" src="./src/plumes-app.js"></script>
   <script type="text/javascript" src="./src/plumes.js"></script>
 
   <script type="text/javascript" src="./examples/page-control.js"></script>
   <script type="text/javascript" src="./examples/page-components.js"></script>
+  <script type="text/javascript" src="./examples/page-list.js"></script>
 </body>
 </html>
