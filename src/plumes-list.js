@@ -6,17 +6,12 @@
     window.Plumes.Component.call(this);
 
     var _this = this,
-        _activeList = [],
         _components = [],
         _itemTemplate = '',
+        _bindingParent = [],
         _bindingKey = null,
         _bindingItem = null,
         _bindingConverter = null;
-
-    // converters du scope (page ou component)
-    // variables du scope (page ou component)
-    // destruction de l'element
-    // refresh $length
 
     function _compare(a, b) {
       if(typeof a != typeof b) {
@@ -34,6 +29,29 @@
       return true;
     }
 
+    function _applyCollectionParent(key, value) {
+      $.each(_components, function() {
+        this.collection(key, plumes.extendEverything(value));
+      });
+    }
+
+    function _bindParent(keys) {
+      $.each(keys, function() {
+        var key = this;
+        if(key != '$index' && key != '$length' && key != _bindingItem) {
+          if($.inArray(key, _bindingParent) < 0) {
+            _bindingParent.push(key);
+
+            component.bind(key, function(value) {
+              _applyCollectionParent(key, value);
+            });
+          }
+
+          _applyCollectionParent(key, plumes.extendEverything(component.collection(key)));
+        }
+      });
+    }
+
     function _createMissingComponents(count, newList, lengthChanged) {
       var component = new plumes.Component(plumes, app, page, null);
       _components.push(component);
@@ -42,6 +60,8 @@
       component.compile(function() {
         component.link({}, function($dom) {
           $list.append($dom);
+
+          _bindParent(component.keysBinded());
 
           count--;
           if(count < 1) {
@@ -111,13 +131,18 @@
     this.link = function() {
       component.bind(_bindingKey, function(value) {
         if(_bindingConverter) {
-          value = _this.convert(_bindingConverter, value || []);
+          value = component.convert(_bindingConverter, value || []);
         }
 
         _updateList(value);
       });
 
-      _updateList(component.collection(_bindingKey));
+      var value = component.collection(_bindingKey);
+      if(_bindingConverter) {
+        value = component.convert(_bindingConverter, value || []);
+      }
+
+      _updateList(value);
     };
 
   };

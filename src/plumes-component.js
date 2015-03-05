@@ -14,7 +14,8 @@
         _templateSrc = null,
         _controllers = null,
         _converters = {},
-        _lists = [];
+        _lists = [],
+        _keysBinded = [];
 
     this.el = {};
 
@@ -52,6 +53,10 @@
       }
 
       return _controllers;
+    };
+
+    this.keysBinded = function() {
+      return _keysBinded;
     };
 
     function _fromNamespace(obj, namespace, newValue, index) {
@@ -161,7 +166,14 @@
     };
 
     this.bind = function(name, func) {
-      _this.on('collection.' + COLLECTION_PRE + name.replace(/\./g, '/'), function(args) {
+      var key = name.split('.')[0];
+      if($.inArray(key, _keysBinded) < 0) {
+        _keysBinded .push(key);
+      }
+
+      name = name.replace(/\./g, '/');
+
+      _this.on('collection.' + COLLECTION_PRE + name, function(args) {
         func.call(_this, args.value);
       });
 
