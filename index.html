@@ -56,7 +56,14 @@
 
         <div class="row">
           <div class="eight columns">
-            <pre class="code-example">
+
+            <div class="files-tabs">
+              <button data-tab="1">index.html</button>
+              <button data-tab="2">page-1.html</button>
+              <button data-tab="3">page-2.html</button>
+            </div>
+
+            <pre class="code-example tab-1">
 <code class="code-example-body prettyprint">
 <!--
 Tells Plumes to be create an app in this portion of the page.
@@ -76,7 +83,7 @@ Use "plumes" attribute with an app name.
               <div class="code-file prettyprint prettyprinted">index.html</div>
             </pre>
 
-            <pre class="code-example">
+            <pre class="code-example tab-2">
 <code class="code-example-body prettyprint">
 <!--
 Add "pl-nav-page" to any element with the targeted page name.
@@ -89,7 +96,19 @@ On click, Plumes navigate to the page.
   </p>
 </div>
 </code>
-              <div class="code-file prettyprint prettyprinted">page1.html</div>
+              <div class="code-file prettyprint prettyprinted">page-1.html</div>
+            </pre>
+
+            <pre class="code-example tab-3">
+<code class="code-example-body prettyprint">
+<div>
+  <h4>Hello, I am the page 2</h4>
+  <p>
+    <a pl-nav-page="page1" class="pl-nav-page">Go to Page 1</a>
+  </p>
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">page-2.html</div>
             </pre>
           </div>
           <div class="four columns">
@@ -109,16 +128,12 @@ On click, Plumes navigate to the page.
 
         <div class="row">
           <div class="eight columns">
-            <pre class="code-example">
-<code class="code-example-body prettyprint">
-<div plumes="appBinding" index="pageBinding">
-  <script type="text/html" pl-page="pageBinding" src="./page-binding.html"></script>
-</div>
-</code>
-              <div class="code-file prettyprint prettyprinted">index.html</div>
-            </pre>
 
-            <pre class="code-example">
+            <div class="files-tabs">
+              <button data-tab="1">page-binding.html</button>
+            </div>
+
+            <pre class="code-example tab-2">
 <code class="code-example-body prettyprint">
 <!--
 Each page has a personnal data collection in key/value format.
@@ -159,16 +174,13 @@ Plumes will automatically update this text whenever the "user"'s value changes.
 
         <div class="row">
           <div class="eight columns">
-            <pre class="code-example">
-  <code class="code-example-body prettyprint">
-  <div plumes="appControl" index="pageControl">
-    <script type="text/html" pl-page="pageControl" src="./page-control.html"></script>
-  </div>
-  </code>
-              <div class="code-file prettyprint prettyprinted">index.html</div>
-            </pre>
 
-            <pre class="code-example">
+            <div class="files-tabs">
+              <button data-tab="1">page-control.html</button>
+              <button data-tab="2">page-control.js</button>
+            </div>
+
+            <pre class="code-example tab-1">
 <code class="code-example-body prettyprint">
 <div>
   <!-- It's possible to use sub properties value -->
@@ -189,7 +201,7 @@ Plumes will automatically update this text whenever the "user"'s value changes.
               <div class="code-file prettyprint prettyprinted">page-control.html</div>
             </pre>
 
-            <pre class="code-example">
+            <pre class="code-example tab-2">
 <code class="code-example-body prettyprint">
 // Each page calls its registered controllers after DOM rendered.
 
@@ -260,16 +272,14 @@ window.Plumes.ready(function() {
 
         <div class="row">
           <div class="eight columns">
-            <pre class="code-example">
-<code class="code-example-body prettyprint">
-<div plumes="appComponents" index="pageComponents">
-  <script type="text/html" pl-page="pageComponents" src="./examples/page-components.html"></script>
-</div>
-</code>
-              <div class="code-file prettyprint prettyprinted">index.html</div>
-            </pre>
 
-            <pre class="code-example">
+            <div class="files-tabs">
+              <button data-tab="1">page-components.html</button>
+              <button data-tab="2">component-robot.html</button>
+              <button data-tab="3">page-components.js</button>
+            </div>
+
+            <pre class="code-example tab-1">
 <code class="code-example-body prettyprint">
 <div>
   <h4>Hello {{robot1}} &amp; {{robot2}}!</h4>
@@ -289,7 +299,7 @@ window.Plumes.ready(function() {
               <div class="code-file prettyprint prettyprinted">page-components.html</div>
             </pre>
 
-            <pre class="code-example">
+            <pre class="code-example tab-2">
 <code class="code-example-body prettyprint">
 <!--
 When the template compiles, the "pl-component" element replace the "pl-component-src" in the DOM.
@@ -302,7 +312,7 @@ When the template compiles, the "pl-component" element replace the "pl-component
               <div class="code-file prettyprint prettyprinted">component-robot.html</div>
             </pre>
 
-            <pre class="code-example">
+            <pre class="code-example tab-3">
 <code class="code-example-body prettyprint">
 window.Plumes.ready(function() {
   'use strict';
@@ -367,16 +377,12 @@ window.Plumes.ready(function() {
         <div class="row">
           <div class="eight columns">
 
-            <pre class="code-example">
-<code class="code-example-body prettyprint">
-<div plumes="appList" index="pageList">
-  <script type="text/html" pl-page="pageList" src="./examples/page-list.html"></script>
-</div>
-</code>
-              <div class="code-file prettyprint prettyprinted">index.html</div>
-            </pre>
+            <div class="files-tabs">
+              <button data-tab="1">page-list.html</button>
+              <button data-tab="2">page-list.js</button>
+            </div>
 
-            <pre class="code-example">
+            <pre class="code-example tab-1">
 <code class="code-example-body prettyprint">
 <div>
   <h4>My {{tasks.length}} robots</h4>
@@ -410,7 +416,7 @@ window.Plumes.ready(function() {
               <div class="code-file prettyprint prettyprinted">page-list.html</div>
             </pre>
 
-            <pre class="code-example">
+            <pre class="code-example tab-2">
 <code class="code-example-body prettyprint">
 window.Plumes.ready(function() {
   'use strict';
@@ -460,7 +466,7 @@ window.Plumes.ready(function() {
 
 });
 </code>
-              <div class="code-file prettyprint prettyprinted">page-list.html</div>
+              <div class="code-file prettyprint prettyprinted">page-list.js</div>
             </pre>
           </div>
           <div class="four columns">

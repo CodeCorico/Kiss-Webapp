@@ -28,6 +28,27 @@ $(function() {
     }
   }
 
+  $('.files-tabs').each(function() {
+    var $container = $(this),
+        $parent = $container.parent(),
+        $tabs = $container.find('[data-tab]');
+
+    $tabs.click(function() {
+      $tabs.each(function() {
+        var $tab = $(this);
+
+        $parent.find('.tab-' + $tab.data('tab')).css('display', 'none');
+        $tab.removeClass('button-primary');
+      });
+
+      var $tab = $(this);
+      $tab.addClass('button-primary');
+      $parent.find('.tab-' +  $tab.data('tab')).css('display', 'block');
+    });
+
+    $container.find('[data-tab="1"]').click();
+  });
+
   $window.resize(function() {
     navOffsetTop = $nav.offset().top;
   });
