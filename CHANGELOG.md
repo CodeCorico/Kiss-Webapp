@@ -8,10 +8,50 @@ Versions details history. For each version you can find:
 * All of the modifications details
 
 <a name="0.1.0"></a>
-# 0.1.0 (2015-?)
+# 0.1.0 (2015-03-06)
 
-[Release 0.1.0]() - [Branch release/0.1.0]()
+[Release 0.1.0](https://github.com/CodeCorico/Plumes/releases/tag/0.1.0) - [Branch release/1.0.0](https://github.com/CodeCorico/Plumes/tree/0.1.0)
 
-### Empty title
+### Breeaking changes
 
-- nothing
+- **Plumes**
+  - Creation
+
+- **Collections**
+  - Creation
+
+- **Databinding**
+  - Creation
+
+- **Converters**
+  - Creation
+
+- **Themes**
+  - Creation
+
+- **pl-page**
+  - Creation
+
+- **pl-page-nav**
+  - Creation
+
+- **pl-element**
+  - Creation
+
+- **pl-bind**
+  - Creation
+
+- **pl-html**
+  - Creation
+
+- **pl-attr**
+  - Creation
+
+- **pl-component-src**
+  - Creation
+
+- **pl-component**
+  - Creation
+
+- **pl-list**
+  - Creation
