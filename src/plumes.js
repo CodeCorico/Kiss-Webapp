@@ -13,6 +13,7 @@
         _components = {},
         _componentsTemplate = {},
         _converters = {},
+        _theme = null,
         _uid = 0;
 
     function _ready(force) {
@@ -113,6 +114,14 @@
       }
 
       return _converters[name];
+    };
+
+    this.theme = function(theme) {
+      if(typeof theme == 'string') {
+        _theme = theme;
+      }
+
+      return _theme;
     };
   };
 

@@ -7,7 +7,13 @@
         _name = $page.attr('pl-page'),
         _controllers = [],
         _src = $page.attr('src'),
-        _components = [];
+        _components = [],
+        _theme = plumes.theme();
+
+    if(_theme) {
+      var themeSrc = $page.attr('src-' + _theme);
+      _src = themeSrc ? themeSrc : _src;
+    }
 
     if($page.get(0).tagName.toLowerCase() != 'script' || !_name || !_src) {
       console.error('Error: Page format needs to be SCRIPT node with "pl-page" and "src" attributes.');
