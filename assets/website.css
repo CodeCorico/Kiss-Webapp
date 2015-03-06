@@ -71,6 +71,14 @@
   color: green;
 }
 
+.sharing {
+  margin-top: 60px;
+}
+
+.header h2 {
+  font-size: 3rem;
+}
+
 @media (min-width: 550px) {
   .header {
     margin-top: 5rem;

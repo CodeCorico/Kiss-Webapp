@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Plumes</title>
+  <title>Plumes - Flying-fast JavaScript single-page webapp engine!</title>
   <meta name="author" content="CodeCorico">
+  <meta name="Description" content="Plumes is a very simple frontend engine for creating mobile webapps with Cordova or PhoneGap. It looks like a light AngularJS but his princpal goal is to have no complex mechanism.">
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="./assets/normalize.css">
@@ -15,8 +19,17 @@
   <div class="container">
     <section class="header">
       <h1 class="title"><img src="./assets/logo.png" alt="Plumes" title="Plumes" /></h1>
-      <p>Flying-fast single-page webapp engine.</p>
-      <a class="button button-primary" href="https://github.com/CodeCorico/Plumes">GitHub project</a>
+      <h2>Flying-fast JavaScript single-page webapp engine!</h2>
+      <a class="button button-primary" href="https://github.com/CodeCorico/Plumes" target="_blank">Download (0.1)</a>
+      <a class="button" href="https://github.com/CodeCorico/Plumes" target="_blank">GitHub project</a>
+
+      <div class="sharing">
+        <div class="g-plus" data-action="share" data-href="http://plumes.codecorico.com" data-width="200" data-height="24"></div>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://plumes.codecorico.com" data-text="Plumes is a flying-fast JavaScript single-page webapp engine!" data-size="large" data-related="codecoricoteam" data-hashtags="plumes">Tweet</a>
+
+        <iframe src="//www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fplumes.codecorico.com&amp;layout=button_count&amp;appId=153164814788634" scrolling="no" frameborder="0" style="height: 24px; width: 120px; border:none; overflow:hidden;" allowTransparency="true"></iframe>
+      </div>
     </section>
 
     <nav class="navbar">
@@ -45,7 +58,27 @@
 
     <div class="docs-section" id="intro">
       <h6 class="docs-header">Intro</h6>
-      <p>Intro.</p>
+
+      <div class="row">
+        <div class="four columns">
+          <h2>Why?</h2>
+          <p>
+            Plumes is a very simple frontend engine for creating mobile webapps with Cordova or PhoneGap. It looks like a light AngularJS but his princpal goal is to have no complex mechanism.
+          </p>
+        </div>
+        <div class="four columns">
+          <h2>Light &amp; Fast</h2>
+          <p>
+            The engine is very lightweight and contains few features. It creates small and fast webapps that does not need superfluous.
+          </p>
+        </div>
+        <div class="four columns">
+          <h2>KISS</h2>
+          <p>
+            In this project simplicity is a key goal in design and unnecessary complexity needs to be avoided. This helps maintain the code quickly and by everyone.
+          </p>
+        </div>
+      </div>
     </div>
 
     <div class="docs-title" id="examples">
@@ -577,15 +610,16 @@ window.Plumes.ready(function() {
           <li><a href="#doc" data-tab="2">Collections</a></li>
           <li><a href="#doc" data-tab="3">Databinding</a></li>
           <li><a href="#doc" data-tab="4">Converters</a></li>
-          <li><a href="#doc" data-tab="5">pl-page</a></li>
-          <li><a href="#doc" data-tab="6">pl-page-nav</a></li>
-          <li><a href="#doc" data-tab="7">pl-element</a></li>
-          <li><a href="#doc" data-tab="8">pl-bind</a></li>
-          <li><a href="#doc" data-tab="9">pl-html</a></li>
-          <li><a href="#doc" data-tab="10">pl-attr-*</a></li>
-          <li><a href="#doc" data-tab="11">pl-component-src</a></li>
-          <li><a href="#doc" data-tab="12">pl-component</a></li>
-          <li><a href="#doc" data-tab="13">pl-list</a></li>
+          <li><a href="#doc" data-tab="5">Themes</a></li>
+          <li><a href="#doc" data-tab="6">pl-page</a></li>
+          <li><a href="#doc" data-tab="7">pl-page-nav</a></li>
+          <li><a href="#doc" data-tab="8">pl-element</a></li>
+          <li><a href="#doc" data-tab="9">pl-bind</a></li>
+          <li><a href="#doc" data-tab="10">pl-html</a></li>
+          <li><a href="#doc" data-tab="11">pl-attr-*</a></li>
+          <li><a href="#doc" data-tab="12">pl-component-src</a></li>
+          <li><a href="#doc" data-tab="13">pl-component</a></li>
+          <li><a href="#doc" data-tab="14">pl-list</a></li>
         </ul>
 
         <div class="row">
@@ -608,38 +642,42 @@ window.Plumes.ready(function() {
             </div>
 
             <div class="tab-5">
-              <h2>pl-page</h2>
+              <h2>Themes</h2>
             </div>
 
             <div class="tab-6">
-              <h2>pl-page-nav</h2>
+              <h2>pl-page</h2>
             </div>
 
             <div class="tab-7">
-              <h2>pl-element</h2>
+              <h2>pl-page-nav</h2>
             </div>
 
             <div class="tab-8">
-              <h2>pl-bind</h2>
+              <h2>pl-element</h2>
             </div>
 
             <div class="tab-9">
-              <h2>pl-html</h2>
+              <h2>pl-bind</h2>
             </div>
 
             <div class="tab-10">
-              <h2>pl-attr-*</h2>
+              <h2>pl-html</h2>
             </div>
 
             <div class="tab-11">
-              <h2>pl-component-src</h2>
+              <h2>pl-attr-*</h2>
             </div>
 
             <div class="tab-12">
-              <h2>pl-component</h2>
+              <h2>pl-component-src</h2>
             </div>
 
             <div class="tab-13">
+              <h2>pl-component</h2>
+            </div>
+
+            <div class="tab-14">
               <h2>pl-list</h2>
             </div>
 
@@ -651,12 +689,13 @@ window.Plumes.ready(function() {
       <h6 class="docs-header">Todo</h6>
       <p>
         <ul>
-          <li>history.back</li>
-          <li>Website by pages</li>
-          <li>Analytics + share buttons + star github + gitter</li>
-          <li>Unit tests</li>
-          <li>Readme</li>
-          <li>Loops - infinite data</li>
+          <li>chore: order to include in min files</li>
+          <li>chore: more</li>
+          <li>feat: history.back</li>
+          <li>chore: Unit tests</li>
+          <li>chore: Readme + gitter</li>
+          <li>chore: doc</li>
+          <li>feat: Loops - infinite data</li>
         </ul>
       </p>
     </div>
@@ -672,6 +711,12 @@ window.Plumes.ready(function() {
   <script type="text/javascript" src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
   <link rel="stylesheet" href="./assets/github-prettify-theme.css">
   <script type="text/javascript" src="./assets/website.js"></script>
+  <script type="text/javascript">
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+  <script src="https://apis.google.com/js/platform.js" async defer>
+    {lang: 'fr'}
+  </script>
 
   <script type="text/javascript" src="./src/vendor/events-manager/events-manager.js"></script>
   <script type="text/javascript" src="./src/plumes-component.js"></script>
@@ -684,5 +729,15 @@ window.Plumes.ready(function() {
   <script type="text/javascript" src="./examples/page-components.js"></script>
   <script type="text/javascript" src="./examples/page-list.js"></script>
   <script type="text/javascript" src="./examples/page-themes.js"></script>
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-55434884-2', 'auto');
+    ga('send', 'pageview');
+  </script>
 </body>
 </html>

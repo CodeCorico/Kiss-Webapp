@@ -1,6 +1,6 @@
 # Plumes
 
-Flying-fast single-page webapp engine
+Flying-fast JavaScript single-page webapp engine
 
 ## Follow the project
 
