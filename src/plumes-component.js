@@ -247,6 +247,11 @@
     this.compile = function(callback) {
       if(!_template) {
         _templateSrc = _templateSrc ? _templateSrc : $component.attr('pl-component-src');
+        var theme = plumes.theme();
+        if(theme) {
+          var themeSrc = $component.attr('pl-component-src-' + theme);
+          _templateSrc = themeSrc ? themeSrc : _templateSrc;
+        }
 
         plumes.registerTemplate(_templateSrc, function(template) {
           _template = template;
