@@ -296,9 +296,9 @@
         });
       }
 
-      _findInScope('[pl-value]').each(function() {
+      _findInScope('[pl-html]').each(function() {
         var $this = $(this),
-            attr = _bindAttribute($this.attr('pl-value'));
+            attr = _bindAttribute($this.attr('pl-html'));
 
         _this.bind(attr.key, function(value) {
           if(attr.converter) {

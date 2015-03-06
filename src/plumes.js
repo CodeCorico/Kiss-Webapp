@@ -85,7 +85,7 @@
 
       $div.load(src + '?_t=' + (new Date().getTime()) + (++_uid), function() {
         _componentsTemplate[src] = $div.html()
-          .replace(/({{(.*?)}})/g, '<span pl-value="$2"></span>');
+          .replace(/({{(.*?)}})/g, '<span pl-html="$2"></span>');
 
         if(callback) {
           callback(_componentsTemplate[src]);

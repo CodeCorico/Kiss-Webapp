@@ -122,7 +122,7 @@
 
       _itemTemplate = $list
         .html()
-        .replace(/({{(.*?)}})/g, '<span pl-value="$2"></span>');
+        .replace(/({{(.*?)}})/g, '<span pl-html="$2"></span>');
       $list.html('');
 
       component.registerList(_this);
