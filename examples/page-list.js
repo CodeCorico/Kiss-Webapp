@@ -1,7 +1,7 @@
 window.Plumes.ready(function() {
   'use strict';
 
-  this.converter('upper', function(list) {
+  this.converter('listUpper', function(list) {
     $.each(list, function() {
       this.text = this.text.toUpperCase();
     });

@@ -390,7 +390,7 @@ window.Plumes.ready(function() {
 
   <!--
   "pl-list" is used to duplicate its content from an array value.
-  It can takes a converter at the end of the syntax.
+  It can takes a converter at the end of the syntaxfor the whole array.
 
   It's not possible to create a controller for a list.
 
@@ -402,7 +402,7 @@ window.Plumes.ready(function() {
 
   "pl-attr-class" binds the attribute after "pl-attr-" of the element
   -->
-  <ul pl-list="robot in robots:upper">
+  <ul pl-list="robot in robots:listUpper">
     <li pl-attr-class="$index:odd">{{$index}}/{{$length}} - {{robot.text}} is a {{type}}</li>
   </ul>
 </div>
