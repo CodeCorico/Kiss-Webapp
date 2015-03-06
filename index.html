@@ -399,9 +399,11 @@ window.Plumes.ready(function() {
   "{{$index}}" is a keywork for showing the item index
   "{{$length}}" is a keywork for showing the "robots" total length
   "{{color}}" is binded from the list container.
+
+  "pl-attr-class" binds the attribute after "pl-attr-" of the element
   -->
   <ul pl-list="robot in robots:upper">
-    <li>{{$index}}/{{$length}} - {{robot.text}} is a {{type}}</li>
+    <li pl-attr-class="$index:odd">{{$index}}/{{$length}} - {{robot.text}} is a {{type}}</li>
   </ul>
 </div>
 </code>
@@ -420,6 +422,10 @@ window.Plumes.ready(function() {
     });
 
     return list;
+  });
+
+  this.converter('odd', function(index) {
+    return index % 2 ? 'blue' : 'green';
   });
 
   this.appList.pageList.controller(function(next) {

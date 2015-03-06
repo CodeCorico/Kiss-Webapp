@@ -63,6 +63,14 @@
   text-align: center;
 }
 
+.blue {
+  color: blue;
+}
+
+.green {
+  color: green;
+}
+
 @media (min-width: 550px) {
   .header {
     margin-top: 5rem;

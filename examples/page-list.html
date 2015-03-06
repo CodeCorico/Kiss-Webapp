@@ -6,6 +6,6 @@
   </form>
 
   <ul pl-list="robot in robots:upper">
-    <li>{{$index}}/{{$length}} - {{robot.text}} is a {{type}}</li>
+    <li pl-attr-class="$index:odd">{{$index}}/{{$length}} - {{robot.text}} is a {{type}}</li>
   </ul>
 </div>

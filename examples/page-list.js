@@ -9,6 +9,10 @@ window.Plumes.ready(function() {
     return list;
   });
 
+  this.converter('odd', function(index) {
+    return index % 2 ? 'blue' : 'green';
+  });
+
   this.appList.pageList.controller(function(next) {
 
     this.bind('addForm', function() {
