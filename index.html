@@ -104,7 +104,7 @@ On click, Plumes navigate to the page.
 <div>
   <h4>Hello, I am the page 2</h4>
   <p>
-    <a pl-nav-page="page1" class="pl-nav-page">Go to Page 1</a>
+    <a pl-nav-page="page1">Go to Page 1</a>
   </p>
 </div>
 </code>
@@ -190,12 +190,13 @@ Plumes will automatically update this text whenever the "user"'s value changes.
     <input pl-bind="robot.name:upper" placeholder="Enter a robot name" />
   </p>
   <!--
-  "pl-src" is used to bind src resource
+  "pl-attr-src" is used to bind src attribute resource
+  "pl-attr-*" binds the attribute after "pl-attr-" of the element
 
   "pl-element" is used to register an element in page
   (jQuery object)
   -->
-  <img pl-src="img" pl-element="avatar" style="width: 100%;" />
+  <img pl-attr-src="img" pl-element="avatar" style="width: 100%;" />
 </div>
 </code>
               <div class="code-file prettyprint prettyprinted">page-control.html</div>
@@ -405,8 +406,6 @@ window.Plumes.ready(function() {
   "{{$index}}" is a keywork for showing the item index
   "{{$length}}" is a keywork for showing the "robots" total length
   "{{color}}" is binded from the list container.
-
-  "pl-attr-class" binds the attribute after "pl-attr-" of the element
   -->
   <ul pl-list="robot in robots:listUpper">
     <li pl-attr-class="$index:odd">{{$index}}/{{$length}} - {{robot.text}} is a {{type}}</li>

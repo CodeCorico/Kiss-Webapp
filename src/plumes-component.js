@@ -355,19 +355,6 @@
         });
       });
 
-      _findInScope('[pl-src]').each(function() {
-        var $this = $(this),
-            attr = _bindAttribute($this.attr('pl-src'));
-
-        _this.bind(attr.key, function(value) {
-          if(attr.converter) {
-            value = _this.convert(attr.converter, value);
-          }
-
-          $this.attr('src', value + '');
-        });
-      });
-
       if(_name) {
         _this.el[_name] = $component;
       }
