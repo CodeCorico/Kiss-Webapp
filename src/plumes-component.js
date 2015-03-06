@@ -1,6 +1,18 @@
 (function() {
   'use strict';
 
+  $.extend($.expr[':'], {
+    attrStartsWith: function (el, _, b) {
+      for (var i = 0, atts = el.attributes, n = atts.length; i < n; i++) {
+        if(atts[i].nodeName.indexOf(b[3]) === 0) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  });
+
   var Component = function(plumes, app, page, $component) {
 
     window.EventsManager.call(this);
@@ -102,11 +114,21 @@
       });
     }
 
-    function _findInScope(selector) {
+    function _findInScope(selector, includeComponent) {
+      var $selection;
+
       if($component.attr('pl-component')) {
-        return $component.find(selector).not('[pl-component] [pl-component] ' + selector);
+        $selection = $component.find(selector).not('[pl-component] [pl-component] ' + selector);
       }
-      return $component.find(selector).not('[pl-component] ' + selector);
+      else {
+        $selection = $component.find(selector).not('[pl-component] ' + selector);
+      }
+
+      if(includeComponent && $component.is(selector)) {
+        $selection = $selection.add($component);
+      }
+
+      return $selection;
     }
 
     function _openPage(name, collection, onlyProperties) {
@@ -295,6 +317,30 @@
           _this.collection(attr.name, page.collection(attr.value));
         });
       }
+
+      _findInScope(':attrStartsWith("pl-attr-")', true).each(function() {
+        var $this = $(this),
+            find = 'pl-attr-',
+            attrName = false,
+            attr = false;
+
+        $.each(this.attributes, function() {
+          if(this.specified && this.name.length > find.length && this.name.indexOf(find) === 0) {
+            attrName = this.name.substr(find.length, this.name.length - find.length);
+            attr = _bindAttribute(this.value);
+          }
+        });
+
+        if(attrName && attr) {
+          _this.bind(attr.key, function(value) {
+            if(attr.converter) {
+              value = _this.convert(attr.converter, value);
+            }
+
+            $this.attr(attrName, value);
+          });
+        }
+      });
 
       _findInScope('[pl-html]').each(function() {
         var $this = $(this),
