@@ -32,6 +32,7 @@
                 <li class="popover-item"><a class="popover-link" href="#exampleControlPage">Control the page</a></li>
                 <li class="popover-item"><a class="popover-link" href="#exampleComponents">Components</a></li>
                 <li class="popover-item"><a class="popover-link" href="#exampleLists">Lists</a></li>
+                <li class="popover-item"><a class="popover-link" href="#exampleThemes">Themes</a></li>
               </ul>
             </div>
           </li>
@@ -307,7 +308,7 @@ When the template compiles, the "pl-component" element replace the "pl-component
 -->
 <div pl-component="robot" class="user-badge">
   <input pl-bind="robot.name" placeholder="Enter a robot name" />
-  <img pl-src="img" pl-element="avatar" style="width: 100%;" />
+  <img pl-attr-src="img" pl-element="avatar" style="width: 100%;" />
 </div>
 </code>
               <div class="code-file prettyprint prettyprinted">component-robot.html</div>
@@ -478,6 +479,94 @@ window.Plumes.ready(function() {
         </div>
       </div>
 
+      <div class="docs-section" id="exampleThemes">
+
+        <h3>Themes</h3>
+
+        <div class="row">
+          <div class="eight columns">
+
+            <div class="files-tabs">
+              <button data-tab="1">index.html</button>
+              <button data-tab="2">page-1-android.html</button>
+              <button data-tab="3">component-robot-android.html</button>
+              <button data-tab="4">page-themes.js</button>
+            </div>
+
+            <pre class="code-example tab-1">
+<code class="code-example-body prettyprint">
+<div plumes="appThemes" index="page1">
+  <!--
+  Pages support src-<theme>.
+  If a theme is defined in Plumes, the src corresponding is used.
+  If the src-<theme> did'nt exists, the default src is used.
+  -->
+  <script type="text/html" pl-page="page1" src="./examples/page-1.html" src-android="./examples/page-1-android.html"></script>
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">index.html</div>
+            </pre>
+
+            <pre class="code-example tab-2">
+<code class="code-example-body prettyprint">
+<div>
+  <h4>Here is an Android page</h4>
+
+  <!--
+  Components support pl-component-src-<theme> such as Pages.
+  -->
+  <div
+    pl-component-src="./examples/component-robot.html"
+    pl-component-src-android="./examples/component-robot-android.html"
+  ></div>
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">page-1-android.html</div>
+            </pre>
+
+            <pre class="code-example tab-3">
+<code class="code-example-body prettyprint">
+<div pl-component="another-robot">
+  <img pl-attr-src="img" pl-element="avatar" style="width: 100%;" />
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">component-robot-android.html</div>
+            </pre>
+
+            <pre class="code-example tab-4">
+<code class="code-example-body prettyprint">
+(function() {
+  'use strict';
+
+  // Tell Plumes the theme used is "android" before its init.
+  window.Plumes.theme('android');
+})();
+
+window.Plumes.ready(function() {
+  'use strict';
+
+  this.component('another-robot', function(next) {
+
+    this.collection('img', 'http://cyborg.namedecoder.com/webimages/edox-ANDROID.png');
+
+    next();
+  });
+
+});
+</code>
+              <div class="code-file prettyprint prettyprinted">page-themes.js</div>
+            </pre>
+          </div>
+          <div class="four columns">
+
+            <div plumes="appThemes" index="page1">
+              <script type="text/html" pl-page="page1" src="./examples/page-1.html" src-android="./examples/page-1-android.html"></script>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="docs-section" id="doc">
@@ -493,11 +582,10 @@ window.Plumes.ready(function() {
           <li><a href="#doc" data-tab="7">pl-element</a></li>
           <li><a href="#doc" data-tab="8">pl-bind</a></li>
           <li><a href="#doc" data-tab="9">pl-html</a></li>
-          <li><a href="#doc" data-tab="10">pl-src</a></li>
-          <li><a href="#doc" data-tab="11">pl-attr-*</a></li>
-          <li><a href="#doc" data-tab="12">pl-component-src</a></li>
-          <li><a href="#doc" data-tab="13">pl-component</a></li>
-          <li><a href="#doc" data-tab="14">pl-list</a></li>
+          <li><a href="#doc" data-tab="10">pl-attr-*</a></li>
+          <li><a href="#doc" data-tab="11">pl-component-src</a></li>
+          <li><a href="#doc" data-tab="12">pl-component</a></li>
+          <li><a href="#doc" data-tab="13">pl-list</a></li>
         </ul>
 
         <div class="row">
@@ -540,25 +628,20 @@ window.Plumes.ready(function() {
             </div>
 
             <div class="tab-10">
-              <h2>pl-src</h2>
-            </div>
-
-            <div class="tab-11">
               <h2>pl-attr-*</h2>
             </div>
 
-            <div class="tab-12">
+            <div class="tab-11">
               <h2>pl-component-src</h2>
             </div>
 
-            <div class="tab-13">
+            <div class="tab-12">
               <h2>pl-component</h2>
             </div>
 
-            <div class="tab-14">
+            <div class="tab-13">
               <h2>pl-list</h2>
             </div>
-
 
           </div>
         </div>
@@ -568,10 +651,12 @@ window.Plumes.ready(function() {
       <h6 class="docs-header">Todo</h6>
       <p>
         <ul>
+          <li>history.back</li>
+          <li>Website by pages</li>
+          <li>Analytics + share buttons + star github + gitter</li>
+          <li>Unit tests</li>
+          <li>Readme</li>
           <li>Loops - infinite data</li>
-          <li>Routing (urls + history)</li>
-          <li>Themes</li>
-          <li>Analytics + share buttons</li>
         </ul>
       </p>
     </div>
@@ -598,5 +683,6 @@ window.Plumes.ready(function() {
   <script type="text/javascript" src="./examples/page-control.js"></script>
   <script type="text/javascript" src="./examples/page-components.js"></script>
   <script type="text/javascript" src="./examples/page-list.js"></script>
+  <script type="text/javascript" src="./examples/page-themes.js"></script>
 </body>
 </html>
