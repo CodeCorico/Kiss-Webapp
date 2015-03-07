@@ -70,12 +70,10 @@
     };
 
     function _clearDOM() {
-      var i = 0;
-      $app.children().each(function() {
+      $app.children().each(function(i) {
         if(i >= _DOMposition) {
           $(this).remove();
         }
-        i++;
       });
     }
 
@@ -87,17 +85,18 @@
         return false;
       }
 
-      if(_page) {
-        _this[_page].destroy();
-      }
+      var previousPage = _page ? _page : null;
 
       _page = pageName;
-      _clearDOM();
 
       var page = _this[_page];
 
       page.compile(function() {
         page.link(collection, function($dom) {
+          if(previousPage) {
+            _this[previousPage].destroy();
+          }
+          _clearDOM();
           $app.append($dom);
 
           if(callback) {
