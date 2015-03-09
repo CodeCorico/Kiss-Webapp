@@ -62,6 +62,7 @@
                 <li class="popover-item"><a class="popover-link" href="#exampleControlPage">Control the page</a></li>
                 <li class="popover-item"><a class="popover-link" href="#exampleComponents">Components</a></li>
                 <li class="popover-item"><a class="popover-link" href="#exampleLists">Lists</a></li>
+                <li class="popover-item"><a class="popover-link" href="#exampleListsVirtualization">Lists Virtualization</a></li>
                 <li class="popover-item"><a class="popover-link" href="#exampleThemes">Themes</a></li>
               </ul>
             </div>
@@ -343,8 +344,8 @@ window.Plumes.ready(function() {
 
   Components can contains other components but they can't bind together.
   -->
-  <div pl-component-src="./examples/component-robot.html" pl-collection-index="index1"></div>
-  <div pl-component-src="./examples/component-robot.html" pl-collection-index="index2"></div>
+  <div pl-component-src="./component-robot.html" pl-collection-index="index1"></div>
+  <div pl-component-src="./component-robot.html" pl-collection-index="index2"></div>
 </div>
 </code>
               <div class="code-file prettyprint prettyprinted">page-components.html</div>
@@ -528,6 +529,81 @@ window.Plumes.ready(function() {
         </div>
       </div>
 
+      <div class="docs-section" id="exampleListsVirtualization">
+
+        <h3>Lists Virtualization</h3>
+
+        <div class="row">
+          <div class="eight columns">
+
+            <div class="files-tabs">
+              <button data-tab="1">index.html</button>
+              <button data-tab="2">page-list-virtualization.html</button>
+              <button data-tab="3">page-list-virtualization.js</button>
+            </div>
+
+            <pre class="code-example tab-1">
+<code class="code-example-body prettyprint">
+<div plumes="appListsVirtualization" index="pageList" history="false">
+  <script type="text/html" pl-page="pageList" src="./page-list-virtualization.html"></script>
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">index.html</div>
+            </pre>
+
+            <pre class="code-example tab-2">
+<code class="code-example-body prettyprint">
+<div>
+  <h4>My {{robots.length}} robots</h4>
+  <!--
+  "virtualization" is a JSON attribute that allows the possibility to only create the visible content of a list.
+  The DOM rendering is faster and optimizes the memory that it is allocated.
+
+  "itemHeight" is needed to calculate the list height.
+  -->
+  <ul pl-list="robot in robots" virtualization='{&quot;itemHeight&quot;: 35}' style="height: 200px;">
+    <li class="lv-item">{{$index}} - {{robot.text}}</li>
+  </ul>
+</div>
+</code>
+              <div class="code-file prettyprint prettyprinted">page-list-virtualization.html</div>
+            </pre>
+
+            <pre class="code-example tab-3">
+<code class="code-example-body prettyprint">
+window.Plumes.ready(function() {
+  'use strict';
+
+  this.appListsVirtualization.pageList.controller(function(next) {
+
+    var array = new Array(100000),
+        robots = [];
+    for(var i = 0; i < array.length; i++) {
+      robots.push({
+        text: 'Robot ' + i
+      });
+    }
+
+    this.collection('robots', robots);
+
+    next();
+  });
+
+});
+</code>
+              <div class="code-file prettyprint prettyprinted">page-list-virtualization.js</div>
+            </pre>
+          </div>
+          <div class="four columns">
+
+            <div plumes="appListsVirtualization" index="pageList" history="false">
+              <script type="text/html" pl-page="pageList" src="./examples/page-list-virtualization.html"></script>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <div class="docs-section" id="exampleThemes">
 
         <h3>Themes</h3>
@@ -550,7 +626,7 @@ window.Plumes.ready(function() {
   If a theme is defined in Plumes, the src corresponding is used.
   If the src-<theme> did'nt exists, the default src is used.
   -->
-  <script type="text/html" pl-page="page1" src="./examples/page-1.html" src-android="./examples/page-1-android.html"></script>
+  <script type="text/html" pl-page="page1" src="./page-1.html" src-android="./page-1-android.html"></script>
 </div>
 </code>
               <div class="code-file prettyprint prettyprinted">index.html</div>
@@ -565,8 +641,8 @@ window.Plumes.ready(function() {
   Components support pl-component-src-<theme> such as Pages.
   -->
   <div
-    pl-component-src="./examples/component-robot.html"
-    pl-component-src-android="./examples/component-robot-android.html"
+    pl-component-src="./component-robot.html"
+    pl-component-src-android="./omponent-robot-android.html"
   ></div>
 </div>
 </code>
@@ -749,6 +825,7 @@ window.Plumes.ready(function() {
   <script type="text/javascript" src="./examples/page-control.js"></script>
   <script type="text/javascript" src="./examples/page-components.js"></script>
   <script type="text/javascript" src="./examples/page-list.js"></script>
+  <script type="text/javascript" src="./examples/page-list-virtualization.js"></script>
   <script type="text/javascript" src="./examples/page-themes.js"></script>
 
   <script type="text/javascript">

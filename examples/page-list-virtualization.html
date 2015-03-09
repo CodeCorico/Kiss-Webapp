@@ -1,0 +1,6 @@
+<div>
+  <h4>My {{robots.length}} robots</h4>
+  <ul pl-list="robot in robots" virtualization='{"itemHeight": 35}' style="height: 200px;">
+    <li class="lv-item">{{$index}} - {{robot.text}}</li>
+  </ul>
+</div>

@@ -8,7 +8,6 @@ $(function() {
       $nav = $('.navbar'),
       navOffsetTop = $nav.offset().top,
       entityMap = {
-        '&': '&amp;',
         '<': '&lt;',
         '>': '&gt;',
         '"': '&quot;',
@@ -17,7 +16,7 @@ $(function() {
       };
 
   function _escapeHtml(string) {
-    return string.replace(/[&<>"'\/]/g, function (s) {
+    return string.replace(/[<>"'\/]/g, function (s) {
       return entityMap[s];
     });
   }

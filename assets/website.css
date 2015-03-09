@@ -79,6 +79,13 @@
   font-size: 3rem;
 }
 
+.lv-item {
+  height: 34px;
+  margin-bottom: 0;
+  border-bottom: 1px solid black;
+  line-height: 33px;
+}
+
 @media (min-width: 550px) {
   .header {
     margin-top: 5rem;
