@@ -11,7 +11,11 @@
         _isReady = false,
         _onReadyFunctions = [],
         _DOMposition = 0,
-        _page = null;
+        _page = null,
+        _historyEnabled = $app.attr('history') || null,
+        _history = [];
+
+    _historyEnabled = _historyEnabled && _historyEnabled == 'false' ? false : true;
 
     if(!_name) {
       console.error('Error: App format needs to have "plumes" not empty attribute.');
@@ -54,8 +58,28 @@
       _ready();
     }
 
+    function _watchHistory() {
+      if(_historyEnabled) {
+        plumes.on('hashChanged', function(args) {
+          args.hash = parseInt(args.hash || 0, 10);
+
+          var lastHistoryIndex = _history.length ? _history.length - 1 : null,
+              hashHistory = _history[args.hash];
+
+          if(lastHistoryIndex != args.hash && hashHistory) {
+            while(_history.length > args.hash + 1) {
+              _history.pop();
+            }
+
+            _this.open(hashHistory.page, $.extend(true, {}, hashHistory.collection), false);
+          }
+        });
+      }
+    }
+
     this.init = function() {
       _collectPages();
+      _watchHistory();
 
       _DOMposition = $app.children().length;
     };
@@ -77,8 +101,9 @@
       });
     }
 
-    this.open = function(pageName, collection, callback) {
+    this.open = function(pageName, collection, updateHistory, callback) {
       collection = collection || {};
+      updateHistory = typeof updateHistory == 'undefined' ? true : updateHistory;
 
       if(!_this[pageName] || !_this[pageName].name) {
         console.error('Error: "' + pageName + '" is not a page of ' + _name + '.');
@@ -92,6 +117,17 @@
       var page = _this[_page];
 
       page.compile(function() {
+        page.referer(previousPage, collection);
+
+        if(_historyEnabled && updateHistory) {
+          _history.push({
+            page: _page,
+            collection: $.extend(true, {}, collection)
+          });
+
+          window.location.hash = _history.length === 1 ? '' : _history.length - 1;
+        }
+
         page.link(collection, function($dom) {
           if(previousPage) {
             _this[previousPage].destroy();

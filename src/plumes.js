@@ -14,7 +14,8 @@
         _componentsTemplate = {},
         _converters = {},
         _theme = null,
-        _uid = 0;
+        _uid = 0,
+        _lastHash = null;
 
     function _ready(force) {
       force = force || false;
@@ -42,7 +43,22 @@
       return anyType;
     };
 
+    function _watchHash() {
+      var hash = location.href.replace( /^[^#]*#?(.*)$/, '$1');
+      if(hash !== _lastHash) {
+        _this.fire('hashChanged', {
+          oldHash: _lastHash,
+          hash: hash
+        });
+        _lastHash = hash;
+      }
+
+      setTimeout(_watchHash, 50);
+    }
+
     this.init = function() {
+      _watchHash();
+
       $('[plumes]').each(function() {
         var app = new _this.App(_this, $(this));
         if(app) {

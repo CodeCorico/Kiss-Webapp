@@ -8,7 +8,8 @@
         _controllers = [],
         _src = $page.attr('src'),
         _components = [],
-        _theme = plumes.theme();
+        _theme = plumes.theme(),
+        _referer = null;
 
     if(_theme) {
       var themeSrc = $page.attr('src-' + _theme);
@@ -42,6 +43,10 @@
 
     this.registerComponent = function(component) {
       _components.push(component);
+    };
+
+    this.referer = function(referer) {
+      _referer = referer;
     };
 
     this.on('linked', function() {
