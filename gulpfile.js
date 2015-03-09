@@ -3,12 +3,21 @@
 
   var gulp = require('gulp'),
       uglify = require('gulp-uglifyjs'),
-      jsFiles = 'src/*.js';
+      plumesJsFiles = [
+        'src/plumes-component.js',
+        'src/plumes-list.js',
+        'src/plumes-page.js',
+        'src/plumes-app.js',
+        'src/plumes.js'
+      ],
+      jsDependencies = [
+        'src/vendor/events-manager/events-manager.js'
+      ];
 
   gulp.task('uglify', function() {
     // without dependencies
     gulp
-      .src(jsFiles)
+      .src(plumesJsFiles)
       .pipe(uglify('plumes.min.js', {
         outSourceMap: true
       }))
@@ -16,7 +25,7 @@
 
     // with dependencies
     gulp
-      .src([jsFiles, 'src/vendor/**/*.js'])
+      .src(jsDependencies.concat(plumesJsFiles))
       .pipe(uglify('plumes-full.min.js', {
         outSourceMap: true
       }))
@@ -24,7 +33,7 @@
   });
 
   gulp.task('watch', function() {
-    gulp.watch(jsFiles, ['uglify']);
+    gulp.watch(plumesJsFiles, ['uglify']);
   });
 
   gulp.task('build', ['uglify']);
