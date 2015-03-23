@@ -54,8 +54,6 @@
           _this[pageName] = page;
         }
       });
-
-      _ready();
     }
 
     function _watchHistory() {
@@ -79,6 +77,7 @@
 
     this.init = function() {
       _collectPages();
+      _ready();
       _watchHistory();
 
       _DOMposition = $app.children().length;
@@ -134,6 +133,8 @@
           }
           _clearDOM();
           $app.append($dom);
+
+          _collectPages();
 
           if(callback) {
             callback();
