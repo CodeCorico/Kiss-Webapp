@@ -77,10 +77,10 @@
 
     this.init = function() {
       _collectPages();
-      _ready();
       _watchHistory();
 
       _DOMposition = $app.children().length;
+      _ready();
     };
 
     this.ready = function(func) {
