@@ -22,7 +22,7 @@
         _this = this,
         _name = null,
         _collection = null,
-        _template = '',
+        _template = null,
         _templateSrc = null,
         _controllers = null,
         _converters = {},
@@ -245,7 +245,7 @@
     }
 
     this.compile = function(callback) {
-      if(!_template) {
+      if(_template === null) {
         _templateSrc = _templateSrc ? _templateSrc : $component.attr('pl-component-src');
         var theme = plumes.theme();
         if(theme) {
