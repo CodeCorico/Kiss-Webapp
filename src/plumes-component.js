@@ -144,7 +144,7 @@
       app.open(name, sendCollection);
     }
 
-    this.collection = function(name, value) {
+    this.collection = function(name, value, srcEvent) {
       if(typeof name == 'undefined') {
         return _collection;
       }
@@ -152,6 +152,8 @@
       if(typeof value == 'undefined') {
         return _fromNamespace(_collection, name);
       }
+
+      srcEvent = srcEvent || null;
 
       var result = _fromNamespace(_collection, name, value);
 
@@ -162,7 +164,8 @@
         for(i = 0; i < result.namespace.length; i++) {
           namespace.push(result.namespace[i]);
           _this.fire(COLLECTION_PRE + namespace.join('/'), {
-            value: _fromNamespace(_collection, namespace.join('.'))
+            value: _fromNamespace(_collection, namespace.join('.')),
+            event: srcEvent
           });
         }
 
@@ -177,7 +180,8 @@
               .replace(/\//g, '.');
 
             _this.fire(event, {
-              value: _fromNamespace(_collection, eventNamespace)
+              value: _fromNamespace(_collection, eventNamespace),
+              event: srcEvent
             });
           }
         }
@@ -196,7 +200,7 @@
       name = name.replace(/\./g, '/');
 
       _this.on('collection.' + COLLECTION_PRE + name, function(args) {
-        func.call(_this, args.value);
+        func.call(_this, args.value, args.event);
       });
 
       return _this;
@@ -410,8 +414,8 @@
             tagName = $this.get(0).tagName.toLowerCase();
 
         if(tagName == 'button' || (tagName == 'input' && (type == 'button' || type == 'submit'))) {
-          $this.bind('click', function() {
-            _this.collection(attr.key, (_this.collection(attr.key) || 0) + 1);
+          $this.bind('click', function(event) {
+            _this.collection(attr.key, (_this.collection(attr.key) || 0) + 1, event);
           });
         }
         else if(tagName == 'input' || tagName == 'textarea') {
@@ -423,14 +427,14 @@
             $this.val(value + '');
           });
 
-          $this.bind('propertychange change click keyup input paste', function() {
-            _this.collection(attr.key, $this.val());
+          $this.bind('propertychange change click keyup input paste', function(event) {
+            _this.collection(attr.key, $this.val(), event);
           });
         }
         else if(tagName == 'form') {
           $this.submit(function(event) {
             event.preventDefault();
-            _this.collection(attr.key, (_this.collection(attr.key) || 0) + 1);
+            _this.collection(attr.key, (_this.collection(attr.key) || 0) + 1, event);
           });
         }
       });
