@@ -2,6 +2,7 @@
   'use strict';
 
   var gulp = require('gulp'),
+      concat = require('gulp-concat'),
       uglify = require('gulp-uglifyjs'),
       plumesJsFiles = [
         'src/plumes-component.js',
@@ -14,10 +15,14 @@
         'src/vendor/events-manager/events-manager.js'
       ];
 
-  gulp.task('uglify', function() {
+  gulp.task('build', function() {
     // without dependencies
     gulp
       .src(plumesJsFiles)
+      .pipe(concat('plumes.js', {
+        newLine: '\r\n'
+      }))
+      .pipe(gulp.dest('./'))
       .pipe(uglify('plumes.min.js', {
         outSourceMap: true
       }))
@@ -26,6 +31,10 @@
     // with dependencies
     gulp
       .src(jsDependencies.concat(plumesJsFiles))
+      .pipe(concat('plumes-full.js', {
+        newLine: '\r\n'
+      }))
+      .pipe(gulp.dest('./'))
       .pipe(uglify('plumes-full.min.js', {
         outSourceMap: true
       }))
@@ -33,10 +42,8 @@
   });
 
   gulp.task('watch', function() {
-    gulp.watch(plumesJsFiles, ['uglify']);
+    gulp.watch(plumesJsFiles, ['build']);
   });
-
-  gulp.task('build', ['uglify']);
 
   // The default task (called when you run `gulp` from cli)
   gulp.task('default', ['watch']);

@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
     "gulp-uglifyjs": "^0.6.0"
   }
 }
