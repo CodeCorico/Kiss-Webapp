@@ -6,7 +6,7 @@
   "authors": [
     "CodeCorico <hello@codecorico.com>"
   ],
-  "main": "plumes.min.js",
+  "main": "plumes-full.min.js",
   "moduleType": [
     "globals"
   ],
