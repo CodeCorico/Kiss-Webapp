@@ -1,14 +1,20 @@
 {
   "name": "Plumes",
   "version": "0.1.0",
+  "description": "Plumes is a very simple frontend engine for creating mobile webapps with Cordova or PhoneGap. It looks like a light AngularJS but his princpal goal is to have no complex mechanism.",
   "homepage": "https://github.com/CodeCorico/Plumes",
   "authors": [
     "CodeCorico <hello@codecorico.com>"
   ],
   "main": "plumes.min.js",
+  "moduleType": [
+    "globals"
+  ],
   "keywords": [
     "webapp",
     "single-page",
+    "databinding",
+    "virtualization",
     "plumes",
     "templates"
   ],
