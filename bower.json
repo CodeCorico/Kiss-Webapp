@@ -1,12 +1,12 @@
 {
-  "name": "Plumes",
+  "name": "Kiss-Webapp",
   "version": "0.1.0",
-  "description": "Plumes is a very simple frontend engine for creating mobile webapps with Cordova or PhoneGap. It looks like a light AngularJS but his princpal goal is to have no complex mechanism.",
-  "homepage": "https://github.com/CodeCorico/Plumes",
+  "description": "Kiss-Webapp is a very simple frontend engine for creating mobile webapps with Cordova or PhoneGap. It looks like a light AngularJS but his princpal goal is to have no complex mechanism.",
+  "homepage": "https://github.com/CodeCorico/Kiss-Webapp",
   "authors": [
     "CodeCorico <hello@codecorico.com>"
   ],
-  "main": "plumes-full.min.js",
+  "main": "kiss-webapp-full.min.js",
   "moduleType": [
     "globals"
   ],
@@ -15,7 +15,6 @@
     "single-page",
     "databinding",
     "virtualization",
-    "plumes",
     "templates"
   ],
   "license": "MIT",
