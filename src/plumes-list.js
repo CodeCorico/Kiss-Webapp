@@ -207,7 +207,7 @@
 
         $.each($list.get(0).attributes, function(idx, attr) {
           if(attr.nodeName != 'pl-list' && attr.nodeName != 'virtualization') {
-            $container.attr(attr.nodeName, attr.nodeValue);
+            $container.attr(attr.nodeName, attr.value);
           }
         });
 
