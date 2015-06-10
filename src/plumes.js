@@ -56,7 +56,7 @@
       setTimeout(_watchHash, 50);
     }
 
-    this.init = function() {
+    function _init() {
       _watchHash();
 
       $('[plumes]').each(function() {
@@ -78,7 +78,7 @@
           app.init();
         }
       });
-    };
+    }
 
     this.ready = function(func) {
       if(_isReady) {
@@ -139,6 +139,12 @@
 
       return _theme;
     };
+
+
+
+    $(function() {
+      _init();
+    });
   };
 
   var plumes = new Plumes();
@@ -152,9 +158,3 @@
 
   window.Plumes = plumes;
 })();
-
-$(function() {
-  'use strict';
-
-  window.Plumes.init();
-});
