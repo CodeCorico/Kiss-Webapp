@@ -49,7 +49,7 @@
       </div>
     </section>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
       <div class="container">
         <ul class="navbar-list">
           <li class="navbar-item"><a class="navbar-link" href="#intro">Intro</a></li>
@@ -695,7 +695,7 @@ window.Plumes.ready(function() {
     </div>
 
     <div class="docs-section" id="doc">
-      <h6 class="docs-header">Doc</h6>
+      <h6 class="docs-header">Documentation</h6>
 
         <ul class="four columns files-tabs doc-summary">
           <li><a href="#doc" data-tab="1">Install</a></li>
@@ -720,6 +720,40 @@ window.Plumes.ready(function() {
 
             <div class="tab-1">
               <h2>Install</h2>
+              <p>
+                Welcome to the Plumes documentation. The documentation is organized into features which contain various components of a Plumes application.
+              </p>
+
+              <h3>Get started</h3>
+              <p>
+                Plumes requires <a href="http://jquery.com" target="_blank">jQuery</a> to works. Install and require it in your code before Plumes.
+              </p>
+
+              <h4>Direct install</h4>
+              <p>
+                Click on the <a href="#">Download button</a> on the top of the page and extract the zip content into your app.
+              </p>
+
+              <h4>Bower install</h4>
+              <p>
+                Use this command into your app directory:
+                <pre class="code-example">
+                  <code class="code-example-body prettyprint">bower install plumes</code>
+                </pre>
+              </p>
+
+              <h4>Git install</h4>
+              <p>
+                Clone the official repository into your app directory:
+                <pre class="code-example"><code class="code-example-body prettyprint">git clone git@github.com:CodeCorico/Plumes.git</code></pre>
+              </p>
+
+              <h4>Use it in your app</h4>
+              <p>
+                Plumes is builded with <a href="https://github.com/XavierBoubert/events-manager" target="_blank">events-manager</a> dependency. If your app doesn't use it you can require in your app the full minification file:
+                <pre class="code-example"><code class="code-example-body prettyprint">&lsaquo;script type="text/javascript" src="plumes-full.min.js"&rsaquo;&lsaquo;/script&rsaquo;</code></pre>
+                Otherwise, use this one:
+                <pre class="code-example"><code class="code-example-body prettyprint">&lsaquo;script type="text/javascript" src="plumes.min.js"&rsaquo;&lsaquo;/script&rsaquo;</code></pre>
             </div>
 
             <div class="tab-2">
