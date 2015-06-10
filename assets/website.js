@@ -5,8 +5,8 @@ $(function() {
       $body = $('body'),
       $document = $(document),
       $codeSnippets = $('.code-example-body'),
-      $nav = $('.navbar'),
-      navOffsetTop = $nav.offset().top,
+      $nav = $('#navbar'),
+      navOffsetTop = $nav.length ? $nav.offset().top : 0,
       entityMap = {
         '<': '&lt;',
         '>': '&gt;',
@@ -48,18 +48,20 @@ $(function() {
     $container.find('[data-tab="1"]').click();
   });
 
-  $window.resize(function() {
-    navOffsetTop = $nav.offset().top;
-  });
+  if($nav.length) {
+    $window.resize(function() {
+      navOffsetTop = $nav.offset().top;
+    });
 
-  $window.on('scroll', function() {
-    if(navOffsetTop < $window.scrollTop() && !$body.hasClass('has-docked-nav')) {
-      $body.addClass('has-docked-nav');
-    }
-    if(navOffsetTop > $window.scrollTop() && $body.hasClass('has-docked-nav')) {
-      $body.removeClass('has-docked-nav');
-    }
-  });
+    $window.on('scroll', function() {
+      if(navOffsetTop < $window.scrollTop() && !$body.hasClass('has-docked-nav')) {
+        $body.addClass('has-docked-nav');
+      }
+      if(navOffsetTop > $window.scrollTop() && $body.hasClass('has-docked-nav')) {
+        $body.removeClass('has-docked-nav');
+      }
+    });
+  }
 
   $codeSnippets.each(function() {
     var newContent = _escapeHtml($(this).html());
